@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaaltijdApplicatie", "MaaltijdApplicatie\MaaltijdApplicatie.csproj", "{6D5C35F5-4EB7-43FF-A2C9-DDCCDCCDD330}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaaltijdApplicatie.Tests", "MaaltijdApplicatie.Tests\MaaltijdApplicatie.Tests.csproj", "{BAE14F82-BE79-49DD-A84F-1169A915E547}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6D5C35F5-4EB7-43FF-A2C9-DDCCDCCDD330}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D5C35F5-4EB7-43FF-A2C9-DDCCDCCDD330}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D5C35F5-4EB7-43FF-A2C9-DDCCDCCDD330}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAE14F82-BE79-49DD-A84F-1169A915E547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAE14F82-BE79-49DD-A84F-1169A915E547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAE14F82-BE79-49DD-A84F-1169A915E547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAE14F82-BE79-49DD-A84F-1169A915E547}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
