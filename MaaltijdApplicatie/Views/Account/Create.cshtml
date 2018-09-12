@@ -1,0 +1,36 @@
+﻿@model AppUserViewModel
+
+<div asp-validation-summary=" All" class="text-danger"></div>
+
+<form asp-action="Create" method="post">
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Number"></label>
+        <input asp-for="Number" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Aanmaken</button>
+
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+</form>
