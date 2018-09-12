@@ -3,6 +3,10 @@
 <!-- Loop the meal data models -->
 @foreach (var m in Model) {
 
-    @Html.Partial("MealDateSummary", m)
+    if (m.Meal != null) {
+        @Html.Partial("MealDateSummary", m)
+    } else {
+        @Html.Partial("MealDateSummaryNoMeal", m)
+    }
 
 }

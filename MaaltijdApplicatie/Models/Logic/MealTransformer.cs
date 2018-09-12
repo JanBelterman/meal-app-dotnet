@@ -22,6 +22,7 @@ namespace MaaltijdApplicatie.Models.Logic {
                 var mealDate = new MealDate() {
                     Date = d,
                     MonthString = d.ToString("MMMM", CultureInfo.CreateSpecificCulture("nl")),
+                    DayOfWeekString = UppercaseFirst(d.ToString("dddd", CultureInfo.CreateSpecificCulture("nl"))),
                     Meal = meals.FirstOrDefault(m => m.DateTime.Date == d.Date) // Insert meal or set null
                 };
 
@@ -31,6 +32,18 @@ namespace MaaltijdApplicatie.Models.Logic {
 
             // Return list
             return mealDates;
+
+        }
+
+        static string UppercaseFirst(string s) {
+
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s)) {
+                return string.Empty;
+            }
+
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
 
         }
 

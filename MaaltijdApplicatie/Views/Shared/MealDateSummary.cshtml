@@ -1,15 +1,25 @@
 ﻿@model MealDate
 
-<div class="card card-outline-primary m-1 p-1">
+<div class="card bg-light card-outline-primary m-1">
 
-    <div class="bg-faded p-1">
+    <div class="card-header p-1">
         <h4>
-            @Model.Date.Day @Model.MonthString
-            <span class="badge badge-pill badge-primary" style="float:right">
+            @Model.DayOfWeekString @Model.Date.Day @Model.MonthString
+            <span class="badge badge-info m-1" style="float:right">
                 <small>@Model.Meal?.Price.ToString("c")</small>
             </span>
         </h4>
     </div>
-    <div class="card-text p-1">@Model.Meal?.Name</div>
+
+    <div class="p-1">
+        <h5 class="card-title p-1">@Model.Meal?.Name</h5>
+        <div class="card-text">@Model.Meal?.Description</div>
+        <div class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</div>
+        <div class="card-text">Jan Belterman</div>
+    </div>
+
+    <button type="button" class="btn btn-success m-1 p-1">
+        Inschrijven <span class="badge badge-light">@Model.Meal?.MaxGuests</span> <!-- Change to guests.count -->
+    </button>
 
 </div>
