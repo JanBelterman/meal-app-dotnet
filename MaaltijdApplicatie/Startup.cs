@@ -32,7 +32,15 @@ namespace MaaltijdApplicatie {
             // Configure http request routes
             app.UseMvc(routes => {
 
+                routes.MapRoute(
+                name: null,
+                template: "",
+                defaults: new {
+                    controller = "Meal",
+                    action = "List"
+                });
 
+                routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
 
             });
 

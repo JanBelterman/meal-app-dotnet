@@ -3,7 +3,7 @@ using MaaltijdApplicatie.Models.Domain;
 
 namespace MaaltijdApplicatie.Models.Repositories {
 
-    interface IMealRepository {
+    public interface IMealRepository {
 
         IQueryable<Meal> Meals { get; }
 

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<MealDate>
+
+<!-- Loop the meal data models -->
+@foreach (var m in Model) {
+
+    <div>
+        <h3>@m.Date.Date</h3>
+        @m.Meal?.Description
+        <h4>@m.Meal?.Price.ToString("c")</h4>
+    </div>
+
+}
