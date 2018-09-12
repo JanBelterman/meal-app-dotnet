@@ -58,7 +58,7 @@ namespace MaaltijdApplicatie.Controllers {
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(AppUserViewModel loginModel) {
+        public async Task<IActionResult> Login(AppUserLoginViewModel loginModel) {
 
             // If login form is valid
             if (ModelState.IsValid) {
@@ -74,7 +74,7 @@ namespace MaaltijdApplicatie.Controllers {
                     // Attempt to sign user in & when succeeded: redirect user to /Account/Index
                     if ((await signInManager.PasswordSignInAsync(user,
                         loginModel.Password, false, false)).Succeeded) {
-                        return Redirect("/Admin/Index");
+                        return Redirect("/Meal/List");
                     }
 
                 }
@@ -88,7 +88,7 @@ namespace MaaltijdApplicatie.Controllers {
         }
 
         // Logs user out
-        public async Task<RedirectResult> Logout(string returnUrl = "/") {
+        public async Task<RedirectResult> Logout(string returnUrl = "/Meal/List") {
             await signInManager.SignOutAsync();
             return Redirect(returnUrl);
         }

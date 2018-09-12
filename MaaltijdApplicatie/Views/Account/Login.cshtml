@@ -1,0 +1,25 @@
+﻿@model AppUserLoginViewModel
+
+<!-- Validation errors -->
+<div class="text-danger" asp-validation-summary="All"></div>
+
+<!-- Login form -->
+<form asp-action="Login" asp-controller="Account" method="post">
+
+    <!-- Username -->
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <div><span asp-validation-for="Username" class="text-danger"></span></div>
+        <input asp-for="Username" class="form-control" />
+    </div>
+    <!-- Password -->
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <div><span asp-validation-for="Password" class="text-danger"></span></div>
+        <input asp-for="Password" class="form-control" />
+    </div>
+
+    <!-- Login button -->
+    <button class="btn btn-primary" type="submit">Log In</button>
+
+</form>
