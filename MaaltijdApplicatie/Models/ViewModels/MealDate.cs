@@ -9,6 +9,8 @@ namespace MaaltijdApplicatie.Models.ViewModels {
 
         public Meal Meal { get; set; }
 
+        public string MonthString { get; set; }
+
     }
 
 }

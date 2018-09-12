@@ -2,6 +2,7 @@
 using MaaltijdApplicatie.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace MaaltijdApplicatie.Models.Logic {
@@ -20,6 +21,7 @@ namespace MaaltijdApplicatie.Models.Logic {
 
                 var mealDate = new MealDate() {
                     Date = d,
+                    MonthString = d.ToString("MMMM", CultureInfo.CreateSpecificCulture("nl")),
                     Meal = meals.FirstOrDefault(m => m.DateTime.Date == d.Date) // Insert meal or set null
                 };
 
