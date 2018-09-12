@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using MaaltijdApplicatie.Models.Repositories;
 
 namespace MaaltijdApplicatie {
 
@@ -9,6 +9,9 @@ namespace MaaltijdApplicatie {
 
         // Adding services to the container
         public void ConfigureServices(IServiceCollection services) {
+
+            // Add meal repo implementation to container
+            services.AddTransient<IMealRepository, FakeMealRepository>();
 
             // Add MVC
             services.AddMvc();
