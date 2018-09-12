@@ -15,11 +15,11 @@ namespace MaaltijdApplicatie.Models.Domain {
 
         public decimal Price { get; set; }
 
-        // public Student StudentCook { get; set; }
+        public virtual AppUser StudentCook { get; set; }
 
         public int MaxGuests { get; set; }
 
-        // public ICollection<Student> StudentsGuests { get; set; }
+        public virtual ICollection<MealStudent> StudentsGuests { get; set; }
 
     }
 
