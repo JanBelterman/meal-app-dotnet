@@ -1,0 +1,33 @@
+﻿@model MealDate
+
+<h4>Maaltijd aanmaken voor @Model.DayOfWeekString @Model.Date.Day @Model.MonthString</h4>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Store" method="post">
+
+    <div class="form-group">
+        <label asp-for="Meal.Name"></label>
+        <input asp-for="Meal.Name" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Meal.Description"></label>
+        <input asp-for="Meal.Description" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Meal.Price"></label>
+        <input asp-for="Meal.Price" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Meal.MaxGuests"></label>
+        <input asp-for="Meal.MaxGuests" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Aanmaken</button>
+
+    <a asp-action="List" class="btn btn-secondary">Cancel</a>
+
+</form>

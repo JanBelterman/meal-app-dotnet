@@ -8,8 +8,16 @@
         </h4>
     </div>
 
-    <button type="button" class="btn btn-danger m-1 p-1">
-        Maaltijd aanmaken
-    </button>
+    <form asp-controller="Meal" asp-action="Create" method="post">
+
+        <input type="hidden" asp-for="Date" value=@Model.Date />
+        <input type="hidden" asp-for="DayOfWeekString" value=@Model.DayOfWeekString />
+        <input type="hidden" asp-for="MonthString" value=@Model.MonthString />
+
+        <button type="submit" class="btn btn-danger m-1 p-1">
+            Maaltijd aanmaken
+        </button>
+
+    </form>
 
 </div>

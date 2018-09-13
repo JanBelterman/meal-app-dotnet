@@ -14,26 +14,27 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-default navbar-dark" role="navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
 
         <a class="navbar-brand" href="/Meal/List">Maaltijd app</a>
 
-        <ul class="navbar-nav">
-            @if (User.Identity.IsAuthenticated) {
-                <li class="nav-item">
-                    <a class="nav-link" href="/Account/Edit">Hallo @User.Identity.Name</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Account/Logout">Log uit</a>
-                </li>
-            } else {
-                <li class="nav-item">
-                    <a class="nav-link" href="/Account/Login">Log in</a>
-                </li>
-            }
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
-    </nav>
+            <div class="navbar-nav mr-auto">
+            </div>
+
+            <div class="navbar-nav">
+                @if (User.Identity.IsAuthenticated) {
+                    <a class="nav-item nav-link" href="/Account/Edit">Hallo @User.Identity.Name</a>
+                    <a class="nav-item nav-link" href="/Account/Logout">Log uit</a>
+                } else {
+                    <a class="nav-item nav-link" href="/Account/Login">Log in</a>
+                }
+            </div>
+
+        </div>
+
+</nav>
 
     <!-- Content -->
     <div class="row m-1 p-1">
