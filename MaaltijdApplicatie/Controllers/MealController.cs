@@ -43,6 +43,12 @@ namespace MaaltijdApplicatie.Controllers {
 
         }
 
+        public IActionResult Register(MealDate mealDate) {
+
+            return RedirectToAction("List");
+
+        }
+
     }
 
 }
