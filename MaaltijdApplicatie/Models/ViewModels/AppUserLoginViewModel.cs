@@ -8,7 +8,10 @@ namespace MaaltijdApplicatie.Models.ViewModels {
         public string Username { get; set; }
 
         [Required]
+        [UIHint("password")]
         public string Password { get; set; }
+
+
 
     }
 
