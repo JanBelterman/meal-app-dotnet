@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Users.Models {
+namespace Users.Models.Context {
 
     public class AppIdentityDbContext : IdentityDbContext<AppUser> {
 
@@ -19,8 +19,8 @@ namespace Users.Models {
             base.OnModelCreating(builder);
 
             builder.Entity<MealStudent>().HasKey(t => new { t.MealId, t.AppUserId });
-            builder.Entity<AppUser>().HasMany<MealStudent>(e => e.GuestOfMeals).WithOne(e => e.AppUser);
 
+            builder.Entity<AppUser>().HasMany<MealStudent>(e => e.GuestOfMeals).WithOne(e => e.AppUser);
             builder.Entity<Meal>().HasOne<AppUser>(e => e.StudentCook).WithMany(e => e.CookOfMeals);
             builder.Entity<Meal>().HasMany<MealStudent>(e => e.StudentsGuests).WithOne(e => e.Meal);
             builder.Entity<Meal>().HasIndex(e => e.DateTime).IsUnique();

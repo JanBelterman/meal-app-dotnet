@@ -2,10 +2,6 @@
 
 @foreach (var m in Model) {
 
-    if (m.Meal != null) {
-        @Html.Partial("MealDateSummary", m)
-    } else {
-        @Html.Partial("MealDateSummaryNoMeal", m)
-    }
+    @Html.Partial("MealdateSummary", m)
 
 }

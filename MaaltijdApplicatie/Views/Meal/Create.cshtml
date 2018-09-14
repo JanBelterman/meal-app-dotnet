@@ -6,6 +6,8 @@
 
 <form asp-action="Store" method="post">
 
+    <input type="hidden" asp-for="Meal.DateTime" value="@Model.Date" />
+
     <div class="form-group">
         <label asp-for="Meal.Name"></label>
         <input asp-for="Meal.Name" class="form-control" />

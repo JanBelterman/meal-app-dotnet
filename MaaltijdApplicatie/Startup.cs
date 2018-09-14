@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MaaltijdApplicatie.Models.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Users.Models;
+using Users.Models.Context;
 using Microsoft.AspNetCore.Identity;
 using MaaltijdApplicatie.Models.Domain;
 
@@ -28,7 +28,7 @@ namespace MaaltijdApplicatie {
                 .AddDefaultTokenProviders();
 
             // Add meal repo implementation to container
-            services.AddTransient<IMealRepository, FakeMealRepository>();
+            services.AddTransient<IMealRepository, DbMealRepository>();
 
             // Add MVC
             services.AddMvc();

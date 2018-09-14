@@ -5,7 +5,9 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
     public interface IMealRepository {
 
-        IQueryable<Meal> Meals { get; }
+        IQueryable<Meal> GetMeals();
+
+        void SaveMeal(Meal meal);
 
     }
 

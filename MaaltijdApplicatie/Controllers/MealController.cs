@@ -5,6 +5,8 @@ using MaaltijdApplicatie.Models.ViewModels;
 using MaaltijdApplicatie.Models.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace MaaltijdApplicatie.Controllers {
 
@@ -20,7 +22,7 @@ namespace MaaltijdApplicatie.Controllers {
 
         // Renders a list with meals for coming 2 weeks
         public ViewResult List() {
-            return View(MealTransformer.TransformMeals(repository.Meals));
+            return View(MealTransformer.TransformMeals(repository.GetMeals()));
         }
 
         // Renders a view to create a meal
@@ -34,9 +36,22 @@ namespace MaaltijdApplicatie.Controllers {
 
         [Authorize]
         [HttpPost]
-        public IActionResult Store(Meal meal) {
+        public async Task<IActionResult> Store(Meal meal) {
 
             // Validate
+            if (ModelState.IsValid) {
+
+                // Get user (student) who is cook
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await userManager.FindByIdAsync(userId);
+                meal.StudentCook = user;
+
+                // Save to repo
+                repository.SaveMeal(meal);
+
+            } else {
+                return View("Create", new MealDate() { Meal = meal, Date = meal.DateTime });
+            }
 
             // Store meal or re-render view with errors
             return RedirectToAction("List");

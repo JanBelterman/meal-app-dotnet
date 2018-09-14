@@ -4,28 +4,25 @@
 
     <div class="card-header p-1">
         <h4>
-            @Model.DayOfWeekString @Model.Date.Day @Model.MonthString
+            @if (Model?.Date.Date == DateTime.Today.Date) {
+                @:Vandaag
+            } else {
+                @(Model.DayOfWeekString + " " + Model.Date.Day + " " + Model.MonthString);
+            }
             <span class="badge badge-info m-1" style="float:right">
                 <small>@Model.Meal?.Price.ToString("c")</small>
             </span>
         </h4>
     </div>
 
-    <div class="p-1">
-        <h5 class="card-title">@Model.Meal?.Name</h5>
-        <div class="card-text">@Model.Meal?.Description</div>
-        <div class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</div>
-        <div class="card-text">Jan Belterman</div>
-    </div>
+    @if (Model.Meal != null) {
 
-    <form asp-action="Register" method="Post">
+        @Html.Partial("MealDateSummaryWithMeal", Model);
 
-        <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
+    } else {
 
-        <button type="submit" class="btn btn-success m-1 p-1">
-            Inschrijven <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
-        </button>
+        @Html.Partial("MealDateSummaryWithoutMeal", Model);
 
-    </form>
+    }
 
 </div>

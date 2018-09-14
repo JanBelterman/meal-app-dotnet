@@ -1,0 +1,18 @@
+﻿@model MealDate
+
+<div class="p-1">
+    <h5 class="card-title">@Model.Meal?.Name</h5>
+    <div class="card-text">@Model.Meal?.Description</div>
+    <div class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</div>
+    <div class="card-text">@Model.Meal?.StudentCook?.Name</div>
+</div>
+
+<form asp-action="Register" method="Post">
+
+    <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
+
+    <button type="submit" class="btn btn-success m-1 p-1">
+        Inschrijven <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+    </button>
+
+</form>
