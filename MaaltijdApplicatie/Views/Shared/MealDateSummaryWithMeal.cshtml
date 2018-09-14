@@ -7,7 +7,7 @@
     <div class="card-text">@Model.Meal?.StudentCook?.Name</div>
 </div>
 
-<form asp-action="Register" method="Post">
+<form asp-action="Register" method="post">
 
     <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
 

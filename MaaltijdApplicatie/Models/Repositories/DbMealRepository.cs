@@ -15,7 +15,7 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         public IQueryable<Meal> GetMeals() {
 
-            return database.Meals.Include(meal => meal.StudentCook);
+            return database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests);
 
         }
 
@@ -36,6 +36,14 @@ namespace MaaltijdApplicatie.Models.Repositories {
                 }
 
             }
+
+            database.SaveChanges();
+
+        }
+
+        public void RegisterForMeal(Meal meal, AppUser student) {
+
+            database.MealStudents.Add(new MealStudent() { MealId = meal.Id, AppUserId = student.Id });
 
             database.SaveChanges();
 

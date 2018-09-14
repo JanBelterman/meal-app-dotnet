@@ -58,7 +58,12 @@ namespace MaaltijdApplicatie.Controllers {
 
         }
 
-        public IActionResult Register(MealDate mealDate) {
+        public async Task<IActionResult> Register(MealDate mealDate) {
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await userManager.FindByIdAsync(userId);
+
+            repository.RegisterForMeal(mealDate.Meal, user);
 
             return RedirectToAction("List");
 
