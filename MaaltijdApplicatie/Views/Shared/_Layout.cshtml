@@ -25,10 +25,10 @@
 
             <div class="navbar-nav">
                 @if (User.Identity.IsAuthenticated) {
-                    <a class="nav-item nav-link" href="/Account/Edit">Hallo @User.Identity.Name</a>
-                    <a class="nav-item nav-link" href="/Account/Logout">Log uit</a>
+                    <a class="nav-item nav-link" asp-controller="Account" asp-action="Edit">Hallo @User.Identity.Name</a>
+                    <a class="nav-item nav-link" asp-controller="Account" asp-action="Logout">Log uit</a>
                 } else {
-                    <a class="nav-item nav-link" href="/Account/Login">Log in</a>
+                    <a class="nav-item nav-link" asp-controller="Account" asp-action="Login">Log in</a>
                 }
             </div>
 
