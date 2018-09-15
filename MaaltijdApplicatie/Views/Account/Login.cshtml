@@ -6,8 +6,6 @@
 <!-- Login form -->
 <form asp-action="Login" asp-controller="Account" method="post">
 
-
-
     <!-- Username -->
     <div class="form-group">
         <label asp-for="Username"></label>
@@ -23,5 +21,9 @@
 
     <!-- Login button -->
     <button class="btn btn-primary" type="submit">Log In</button>
+
+    <button formmethod="get" asp-action="Create" class="btn btn-secondary">
+        Account aanmaken
+    </button>
 
 </form>

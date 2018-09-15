@@ -11,8 +11,6 @@ namespace MaaltijdApplicatie.Models.ViewModels {
         [UIHint("password")]
         public string Password { get; set; }
 
-
-
     }
 
 }

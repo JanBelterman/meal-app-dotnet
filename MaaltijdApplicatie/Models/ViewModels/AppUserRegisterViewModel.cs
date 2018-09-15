@@ -2,12 +2,13 @@
 
 namespace MaaltijdApplicatie.Models.ViewModels {
 
-    public class AppUserViewModel {
+    public class AppUserRegisterViewModel {
 
         [Required]
         public string Username { get; set; }
 
         [Required]
+        [UIHint("password")]
         public string Password { get; set; }
 
         [Required]

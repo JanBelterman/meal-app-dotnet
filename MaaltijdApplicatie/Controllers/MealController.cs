@@ -58,6 +58,7 @@ namespace MaaltijdApplicatie.Controllers {
 
         }
 
+        [Authorize]
         public async Task<IActionResult> Register(MealDate mealDate) {
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

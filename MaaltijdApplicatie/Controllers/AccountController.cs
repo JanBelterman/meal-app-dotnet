@@ -18,12 +18,15 @@ namespace MaaltijdApplicatie.Controllers {
             this.signInManager = signInManager;
         }
 
-        public ViewResult Create() {
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Create() {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(AppUserViewModel register) {
+        [AllowAnonymous]
+        public async Task<IActionResult> Create(AppUserRegisterViewModel register) {
 
             if (ModelState.IsValid) {
 
@@ -37,7 +40,7 @@ namespace MaaltijdApplicatie.Controllers {
                 IdentityResult result = await userManager.CreateAsync(user, register.Password);
 
                 if (result.Succeeded) {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("List", "Meal");
                 } else {
                     foreach (IdentityError error in result.Errors) {
                         ModelState.AddModelError("", error.Description);
@@ -49,7 +52,7 @@ namespace MaaltijdApplicatie.Controllers {
             return View(register);
 
         }
-        
+
         [AllowAnonymous]
         public ViewResult Login() {
             return View();
@@ -74,7 +77,7 @@ namespace MaaltijdApplicatie.Controllers {
                     // Attempt to sign user in & when succeeded: redirect user to /Account/Index
                     if ((await signInManager.PasswordSignInAsync(user,
                         loginModel.Password, false, false)).Succeeded) {
-                        return Redirect("/Meal/List");
+                        return RedirectToAction("List", "Meal");
                     }
 
                 }
@@ -88,9 +91,9 @@ namespace MaaltijdApplicatie.Controllers {
         }
 
         // Logs user out
-        public async Task<RedirectResult> Logout(string returnUrl = "/Meal/List") {
+        public async Task<IActionResult> Logout() {
             await signInManager.SignOutAsync();
-            return Redirect(returnUrl);
+            return RedirectToAction("List", "Meal");
         }
 
     }

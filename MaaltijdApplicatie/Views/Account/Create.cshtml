@@ -1,4 +1,4 @@
-﻿@model AppUserViewModel
+﻿@model AppUserRegisterViewModel
 
 <div asp-validation-summary=" All" class="text-danger"></div>
 
@@ -31,6 +31,6 @@
 
     <button type="submit" class="btn btn-primary">Aanmaken</button>
 
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <a asp-controller="Meal" asp-action="List" class="btn btn-secondary">Cancel</a>
 
 </form>
