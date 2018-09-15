@@ -28,6 +28,7 @@
                     <a class="nav-item nav-link" asp-controller="Account" asp-action="Edit">Hallo @User.Identity.Name</a>
                     <a class="nav-item nav-link" asp-controller="Account" asp-action="Logout">Log uit</a>
                 } else {
+                    <a class="nav-item nav-link" asp-controller="Account" asp-action="Create">Registreren</a>
                     <a class="nav-item nav-link" asp-controller="Account" asp-action="Login">Log in</a>
                 }
             </div>
