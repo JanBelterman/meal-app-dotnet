@@ -2,6 +2,6 @@
 
 @foreach (var m in Model) {
     
-    @Html.PartialAsync("MealdateSummary", m)
+    @await Html.PartialAsync("MealdateSummary", m)
 
 }
