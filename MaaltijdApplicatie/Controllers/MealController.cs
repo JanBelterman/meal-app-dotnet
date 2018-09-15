@@ -54,6 +54,7 @@ namespace MaaltijdApplicatie.Controllers {
             }
 
             // Store meal or re-render view with errors
+            TempData["message"] = "Maaltijd aangemaakt";
             return RedirectToAction("List");
 
         }
@@ -66,6 +67,7 @@ namespace MaaltijdApplicatie.Controllers {
 
             repository.RegisterForMeal(mealDate.Meal, user);
 
+            TempData["message"] = "Succesvol aangemeld";
             return RedirectToAction("List");
 
         }

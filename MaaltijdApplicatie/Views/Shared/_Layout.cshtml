@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/styles.css">
 
+    <!-- Validation error styles -->
+    <style>
+        .input-validation-error {
+            border-color: red;
+            background-color: #fee;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -41,7 +49,17 @@
     <div class="row m-1 p-1">
 
         <div class="col-12">
+
+                @if (TempData["message"] != null) {
+                    <div class="alert alert-success m-1 mb-3">@TempData["message"]</div>
+                }
+
+                @if (TempData["general_error"] != null) {
+                    <div class="alert alert-danger m-1 mb-3">@TempData["error"]</div>
+                }
+
             @RenderBody()
+
         </div>
 
     </div>

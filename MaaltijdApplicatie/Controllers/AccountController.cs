@@ -40,6 +40,7 @@ namespace MaaltijdApplicatie.Controllers {
                 IdentityResult result = await userManager.CreateAsync(user, register.Password);
 
                 if (result.Succeeded) {
+                    TempData["message"] = "Account aangemaakt";
                     return RedirectToAction("List", "Meal");
                 } else {
                     foreach (IdentityError error in result.Errors) {
@@ -77,6 +78,7 @@ namespace MaaltijdApplicatie.Controllers {
                     // Attempt to sign user in & when succeeded: redirect user to /Account/Index
                     if ((await signInManager.PasswordSignInAsync(user,
                         loginModel.Password, false, false)).Succeeded) {
+                        TempData["message"] = "Ingelogd";
                         return RedirectToAction("List", "Meal");
                     }
 
@@ -85,7 +87,7 @@ namespace MaaltijdApplicatie.Controllers {
             }
 
             // Pass error message to view
-            ModelState.AddModelError("", "Ongeldige gebruikersnaam of wachtwoord");
+            TempData["login_error"] = "Ongeldige gegevens";
             return View(loginModel);
 
         }
@@ -93,6 +95,7 @@ namespace MaaltijdApplicatie.Controllers {
         // Logs user out
         public async Task<IActionResult> Logout() {
             await signInManager.SignOutAsync();
+            TempData["message"] = "Uitgelogd";
             return RedirectToAction("List", "Meal");
         }
 
