@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MealDate>
 
 @foreach (var m in Model) {
-
-    @Html.Partial("MealdateSummary", m)
+    
+    @Html.PartialAsync("MealdateSummary", m)
 
 }

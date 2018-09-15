@@ -23,11 +23,11 @@
 
     @if (Model.Meal != null) {
 
-        @Html.Partial("MealDateSummaryWithMeal", Model);
+        @Html.PartialAsync("MealDateSummaryWithMeal", Model);
 
     } else {
 
-        @Html.Partial("MealDateSummaryWithoutMeal", Model);
+        @Html.PartialAsync("MealDateSummaryWithoutMeal", Model);
 
     }
 
