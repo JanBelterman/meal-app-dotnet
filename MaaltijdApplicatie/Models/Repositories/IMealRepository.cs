@@ -10,6 +10,7 @@ namespace MaaltijdApplicatie.Models.Repositories {
         void SaveMeal(Meal meal);
 
         void RegisterForMeal(Meal meal, AppUser student);
+        void UnsubscribeFromMeal(int mealId, string studentId);
 
     }
 

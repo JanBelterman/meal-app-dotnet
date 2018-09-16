@@ -29,7 +29,7 @@ namespace MaaltijdApplicatie.Models.Domain {
 
         public virtual AppUser StudentCook { get; set; }
 
-        public virtual ICollection<MealStudent> StudentsGuests { get; set; }
+        public virtual ICollection<MealStudent> StudentsGuests { get; set; } = new List<MealStudent>();
 
     }
 

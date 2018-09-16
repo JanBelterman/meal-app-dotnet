@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using MaaltijdApplicatie.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 using Users.Models.Context;
@@ -44,6 +45,17 @@ namespace MaaltijdApplicatie.Models.Repositories {
         public void RegisterForMeal(Meal meal, AppUser student) {
 
             database.MealStudents.Add(new MealStudent() { MealId = meal.Id, AppUserId = student.Id });
+
+            database.SaveChanges();
+
+        }
+
+        public void UnsubscribeFromMeal(int mealId, string studentId) {
+
+            var mealStudent = database.MealStudents.FirstOrDefault(m => m.MealId == mealId && m.AppUserId == studentId);
+            if (mealStudent != null) {
+                database.MealStudents.Remove(mealStudent);
+            }
 
             database.SaveChanges();
 

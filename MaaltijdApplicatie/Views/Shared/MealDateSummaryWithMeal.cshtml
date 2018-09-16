@@ -1,11 +1,9 @@
 ﻿@model MealDate
 
-<div class="p-1 mb-1">
-    <h6 class="card-title">@Model.Meal?.Name</h6>
-    <div class="card-text">@Model.Meal?.Description</div>
-    <div class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</div>
-    <div class="card-text">@Model.Meal?.StudentCook?.Name</div>
-</div>
+<h5 class="card-title">@Model.Meal?.Name</h5>
+<p class="card-text">@Model.Meal?.Description</p>
+<p class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</p>
+<p class="card-text">@Model.Meal?.StudentCook?.Name</p>
 
 @if (!Model.UserIsRegistered) {
 
@@ -13,8 +11,7 @@
 
         <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
 
-
-        <button type="submit" class="btn btn-success m-1 p-1">
+        <button type="submit" class="btn btn-success">
             Mee eten <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
         </button>
 
@@ -25,7 +22,9 @@
 
     <form asp-action="Cancel" method="post">
 
-        <button class="btn btn-danger m-1 p-1">
+        <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
+
+        <button type="submit" class="btn btn-danger">
             Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
         </button>
 

@@ -1,10 +1,9 @@
 ﻿@model MealDate
 
-<div class="card bg-light card-outline-primary m-1 mb-2">
+<div class="card bg-light mb-2">
 
-    <div class="card-header p-1">
-        <h4>
-
+    <div class="card-header">
+        <h5>
             @if (Model?.Date.Date == DateTime.Today.Date) {
                 @:Vandaag
             } else {
@@ -16,19 +15,26 @@
                     <small>@Model.Meal?.Price?.ToString("c")</small>
                 </span>
             }
-
-
-        </h4>
+            @if (Model.UserIsRegistered) {
+                <span class="badge badge-success m-1" style="float:right">
+                    <small>Aangemeld</small>
+                </span>
+            }
+        </h5>
     </div>
 
-    @if (Model.Meal != null) {
+    <div class="card-body">
 
-        @await Html.PartialAsync("MealDateSummaryWithMeal", Model);
+        @if (Model.Meal != null) {
 
-    } else {
+            @await Html.PartialAsync("MealDateSummaryWithMeal", Model);
 
-        @await Html.PartialAsync("MealDateSummaryWithoutMeal", Model);
+        } else {
 
-    }
+            @await Html.PartialAsync("MealDateSummaryWithoutMeal", Model);
+
+        }
+
+    </div>
 
 </div>

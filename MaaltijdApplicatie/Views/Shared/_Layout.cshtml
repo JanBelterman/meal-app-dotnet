@@ -43,26 +43,22 @@
 
         </div>
 
-</nav>
+    </nav>
 
     <!-- Content -->
-    <div class="row m-1 p-1">
+    <div class="col-12 mt-2">
 
-        <div class="col-12">
+        @if (TempData["message"] != null) {
+            <div class="alert alert-success m-1 mb-3">@TempData["message"]</div>
+        }
 
-                @if (TempData["message"] != null) {
-                    <div class="alert alert-success m-1 mb-3">@TempData["message"]</div>
-                }
+        @if (TempData["general_error"] != null) {
+            <div class="alert alert-danger m-1 mb-3">@TempData["error"]</div>
+        }
 
-                @if (TempData["general_error"] != null) {
-                    <div class="alert alert-danger m-1 mb-3">@TempData["error"]</div>
-                }
+        @RenderBody()
 
-            @RenderBody()
-
-        </div>
-
-    </div>
+</div>
 
 </body>
 

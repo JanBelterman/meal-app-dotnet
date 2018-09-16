@@ -79,6 +79,39 @@ namespace MaaltijdApplicatie.Controllers {
 
         }
 
+        [Authorize]
+        [HttpPost]
+        public IActionResult Cancel(MealDate mealDate) {
+
+            // Get user
+            var user = GetUser();
+
+            // Sign user out
+            if (user != null) {
+
+                // Remove studentMeal record with meal id and user id
+                repository.UnsubscribeFromMeal(mealDate.Meal.Id, GetUserId());
+
+            }
+
+            // Render list view + succes message
+            TempData["message"] = "Succesvol afgemeld";
+            return RedirectToAction("List");
+
+        }
+
+        private async Task<AppUser> GetUser() {
+
+            // Get user id
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // Return user
+            return await userManager.FindByIdAsync(userId);
+
+        }
+        private string GetUserId() {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
     }
 
 }

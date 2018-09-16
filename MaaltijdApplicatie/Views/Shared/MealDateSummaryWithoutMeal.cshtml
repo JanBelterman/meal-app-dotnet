@@ -1,8 +1,6 @@
 ﻿@model MealDate
 
-<div class="p-1">
-    <div class="card-text">Nog niemand kookt</div>
-</div>
+<p class="card-text">Geen maaltijd</p>
 
 <form asp-controller="Meal" asp-action="Create" method="post">
 
@@ -10,7 +8,7 @@
     <input type="hidden" asp-for="DayOfWeekString" value=@Model.DayOfWeekString />
     <input type="hidden" asp-for="MonthString" value=@Model.MonthString />
 
-    <button type="submit" class="btn btn-primary m-1 p-1">
+    <button type="submit" class="btn btn-primary">
         Maaltijd aanmaken
     </button>
 
