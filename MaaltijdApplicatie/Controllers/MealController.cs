@@ -50,7 +50,12 @@ namespace MaaltijdApplicatie.Controllers {
                 repository.SaveMeal(meal);
 
             } else {
-                return View("Create", new MealDate() { Meal = meal, Date = meal.DateTime });
+                var mealDate = new MealDate() {
+                    Meal = meal,
+                    Date = meal.DateTime
+                };
+                MealTransformer.AddDateStrings(mealDate); // Does it add reference?
+                return View("Create", mealDate);
             }
 
             // Store meal or re-render view with errors

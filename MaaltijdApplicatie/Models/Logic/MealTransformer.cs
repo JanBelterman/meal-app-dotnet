@@ -2,7 +2,6 @@
 using MaaltijdApplicatie.Models.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace MaaltijdApplicatie.Models.Logic {
@@ -21,8 +20,8 @@ namespace MaaltijdApplicatie.Models.Logic {
 
                 var mealDate = new MealDate() {
                     Date = d,
-                    MonthString = d.ToString("MMMM", CultureInfo.CreateSpecificCulture("nl")),
-                    DayOfWeekString = UppercaseFirst(d.ToString("dddd", CultureInfo.CreateSpecificCulture("nl"))),
+                    MonthString = d.ToString("MMMM"),
+                    DayOfWeekString = UppercaseFirst(d.ToString("dddd")),
                     Meal = meals.FirstOrDefault(m => m.DateTime.Date == d.Date) // Insert meal or set null
                 };
 
@@ -32,6 +31,13 @@ namespace MaaltijdApplicatie.Models.Logic {
 
             // Return list
             return mealDates;
+
+        }
+
+        public static void AddDateStrings(MealDate mealDate) {
+
+            mealDate.DayOfWeekString = UppercaseFirst(mealDate.Date.ToString("dddd"));
+            mealDate.MonthString = mealDate.Date.ToString("MMMM");
 
         }
 
