@@ -2,29 +2,31 @@
 
 <h4>Maaltijd aanmaken voor @Model.DayOfWeekString @Model.Date.Day @Model.MonthString</h4>
 
-<div asp-validation-summary="All" class="text-danger"></div>
-
 <form asp-action="Store" method="post">
 
     <input type="hidden" asp-for="Meal.DateTime" value="@Model.Date" />
 
     <div class="form-group">
         <label asp-for="Meal.Name"></label>
+        <div><span asp-validation-for="Meal.Name" class="text-danger"></span></div>
         <input asp-for="Meal.Name" class="form-control" />
     </div>
 
     <div class="form-group">
         <label asp-for="Meal.Description"></label>
+        <div><span asp-validation-for="Meal.Description" class="text-danger"></span></div>
         <input asp-for="Meal.Description" class="form-control" />
     </div>
 
     <div class="form-group">
         <label asp-for="Meal.Price"></label>
+        <div><span asp-validation-for="Meal.Price" class="text-danger"></span></div>
         <input asp-for="Meal.Price" class="form-control" />
     </div>
 
     <div class="form-group">
         <label asp-for="Meal.MaxGuests"></label>
+        <div><span asp-validation-for="Meal.MaxGuests" class="text-danger"></span></div>
         <input asp-for="Meal.MaxGuests" class="form-control" />
     </div>
 

@@ -84,10 +84,11 @@ namespace MaaltijdApplicatie.Controllers {
 
                 }
 
+                TempData["login_error"] = "Ongeldige gegevens";
+
             }
 
             // Pass error message to view
-            TempData["login_error"] = "Ongeldige gegevens";
             return View(loginModel);
 
         }

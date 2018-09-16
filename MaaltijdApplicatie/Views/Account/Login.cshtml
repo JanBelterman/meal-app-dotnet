@@ -14,8 +14,6 @@
         <input asp-for="Password" class="form-control" />
     </div>
 
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
     @if (TempData["login_error"] != null) {
         <div class="alert alert-danger mb-3 ">@TempData["login_error"]</div>
     }

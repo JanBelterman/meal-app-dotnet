@@ -13,7 +13,7 @@
 
             @if (Model.Meal != null) {
                 <span class="badge badge-info m-1" style="float:right">
-                    <small>@Model.Meal?.Price.ToString("c")</small>
+                    <small>@Model.Meal?.Price?.ToString("c")</small>
                 </span>
             }
 
