@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Users.Models.Context;
 using Microsoft.AspNetCore.Identity;
 using MaaltijdApplicatie.Models.Domain;
+using System.Globalization;
 
 namespace MaaltijdApplicatie {
 
@@ -37,6 +38,12 @@ namespace MaaltijdApplicatie {
 
         // Configure http request pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+
+            // Setting culture
+            var cultureInfo = new CultureInfo("nl");
+            cultureInfo.NumberFormat.CurrencySymbol = "€";
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             // Use developer exception pages if the application is in development mode
             if (env.IsDevelopment()) {
