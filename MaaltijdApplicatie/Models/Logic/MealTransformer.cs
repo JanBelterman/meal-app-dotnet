@@ -9,7 +9,7 @@ namespace MaaltijdApplicatie.Models.Logic {
     // Transforms meals, so that all dates are added to the list for the coming 2 weeks and dates are filled with available meals
     public class MealTransformer {
 
-        public static IEnumerable<MealDate> TransformMeals(IEnumerable<Meal> meals) {
+        public static IEnumerable<MealDate> TransformMeals(IEnumerable<Meal> meals, AppUser student) {
 
             // Create list
             List<MealDate> mealDates = new List<MealDate>();
@@ -18,11 +18,14 @@ namespace MaaltijdApplicatie.Models.Logic {
             // Insert meals in correct dates
             foreach (var d in DateTime.Now.GetDatesForComingTwoWeeks()) {
 
+                var meal = meals.FirstOrDefault(m => m.DateTime.Date == d.Date);
+
                 var mealDate = new MealDate() {
                     Date = d,
                     MonthString = d.ToString("MMMM"),
                     DayOfWeekString = UppercaseFirst(d.ToString("dddd")),
-                    Meal = meals.FirstOrDefault(m => m.DateTime.Date == d.Date) // Insert meal or set null
+                    Meal = meal, // Insert meal or set null
+                    UserIsRegistered = CheckIfUserIsRegistered(meal, student)
                 };
 
                 mealDates.Add(mealDate);
@@ -38,6 +41,22 @@ namespace MaaltijdApplicatie.Models.Logic {
 
             mealDate.DayOfWeekString = UppercaseFirst(mealDate.Date.ToString("dddd"));
             mealDate.MonthString = mealDate.Date.ToString("MMMM");
+
+        }
+
+        static bool CheckIfUserIsRegistered(Meal meal, AppUser student) { // Change to lambda
+
+            if (meal != null) {
+
+                foreach (MealStudent mealStud in meal.StudentsGuests) {
+                    if (mealStud.AppUser.Id == student.Id) {
+                        return true;
+                    }
+                }
+
+            }
+
+            return false;
 
         }
 

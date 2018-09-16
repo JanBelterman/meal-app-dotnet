@@ -7,12 +7,28 @@
     <div class="card-text">@Model.Meal?.StudentCook?.Name</div>
 </div>
 
-<form asp-action="Register" method="post">
+@if (!Model.UserIsRegistered) {
 
-    <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
+    <form asp-action="Register" method="post">
 
-    <button type="submit" class="btn btn-success m-1 p-1">
-        Ik eet mee <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
-    </button>
+        <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
 
-</form>
+
+        <button type="submit" class="btn btn-success m-1 p-1">
+            Mee eten <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+        </button>
+
+
+    </form>
+
+} else {
+
+    <form asp-action="Cancel" method="post">
+
+        <button class="btn btn-danger m-1 p-1">
+            Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+        </button>
+
+    </form>
+
+}

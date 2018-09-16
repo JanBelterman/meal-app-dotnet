@@ -21,8 +21,10 @@ namespace MaaltijdApplicatie.Controllers {
         }
 
         // Renders a list with meals for coming 2 weeks
-        public ViewResult List() {
-            return View(MealTransformer.TransformMeals(repository.GetMeals()));
+        public async Task<IActionResult> List() {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await userManager.FindByIdAsync(userId);
+            return View(MealTransformer.TransformMeals(repository.GetMeals(), user));
         }
 
         // Renders a view to create a meal
