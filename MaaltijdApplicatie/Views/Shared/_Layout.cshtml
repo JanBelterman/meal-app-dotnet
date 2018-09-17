@@ -49,11 +49,11 @@
     <div class="col-12 mt-2">
 
         @if (TempData["message"] != null) {
-            <div class="alert alert-success">@TempData["message"]</div>
+            <div class="alert alert-success mb-2">@TempData["message"]</div>
         }
 
         @if (TempData["general_error"] != null) {
-            <div class="alert alert-danger">@TempData["error"]</div>
+            <div class="alert alert-danger mb-2">@TempData["error"]</div>
         }
 
         @RenderBody()

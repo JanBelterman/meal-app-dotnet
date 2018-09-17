@@ -11,11 +11,13 @@ namespace MaaltijdApplicatie.Models.ViewModels {
 
         public Meal Meal { get; set; }
 
-        public bool UserIsRegistered { get; set; }
+        public bool UserIsRegistered { get; set; } = false;
 
-        public bool UserIsCook { get; set; }
+        public bool UserIsCook { get; set; } = false;
 
-        public bool MealIsFull { get; set; }
+        public bool MealIsFull { get; set; } = false;
+
+        public bool UserLoggedIn { get; set; } = false;
 
     }
 

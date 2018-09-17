@@ -5,15 +5,21 @@
 <p class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</p>
 <p class="card-text">@Model.Meal?.StudentCook?.Name</p>
 
-@if (Model.UserIsCook) {
+@if (Model.UserLoggedIn) {
 
-    <a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
-        Bijwerken
-    </a>
+if (Model.UserIsCook) {
+
+    if (!Model.MealIsFull) {
+
+        <a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
+            Bijwerken
+        </a>
+
+    }
 
 } else {
 
-    @if (!Model.UserIsRegistered) {
+    if (!Model.UserIsRegistered) {
 
         if (!Model.MealIsFull) {
             <a asp-action="Register" class="btn btn-success" asp-route-MealId="@Model.Meal.Id">
@@ -34,5 +40,7 @@
         </form>
 
     }
+
+}
 
 }

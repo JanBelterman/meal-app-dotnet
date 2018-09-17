@@ -15,10 +15,12 @@
                     <small>@Model.Meal?.Price?.ToString("c")</small>
                 </span>
             }
-            @if (Model.UserIsRegistered) {
-                <span class="badge badge-success m-1" style="float:right">
-                    <small>Aangemeld</small>
-                </span>
+            @if (Model.UserLoggedIn) {
+                @if (Model.UserIsRegistered) {
+                    <span class="badge badge-success m-1" style="float:right">
+                        <small>Aangemeld</small>
+                    </span>
+                }
             }
         </h5>
     </div>

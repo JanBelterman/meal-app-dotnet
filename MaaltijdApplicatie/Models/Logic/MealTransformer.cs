@@ -27,7 +27,8 @@ namespace MaaltijdApplicatie.Models.Logic {
                     Meal = meal, // Insert meal or set null
                     UserIsRegistered = CheckIfUserIsRegistered(meal, student),
                     UserIsCook = CheckIfUserIsCook(meal, student),
-                    MealIsFull = meal?.StudentsGuests?.Count >= meal?.MaxGuests && false
+                    MealIsFull = meal?.StudentsGuests?.Count >= meal?.MaxGuests && false,
+                    UserLoggedIn = student != null
                 };
 
                 mealDates.Add(mealDate);
@@ -68,6 +69,8 @@ namespace MaaltijdApplicatie.Models.Logic {
                         return true;
                     }
                 }
+
+                return false;
 
             }
 
