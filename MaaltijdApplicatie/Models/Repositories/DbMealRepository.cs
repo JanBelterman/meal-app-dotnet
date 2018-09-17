@@ -21,7 +21,7 @@ namespace MaaltijdApplicatie.Models.Repositories {
         }
 
         public Meal GetMeal(int id) {
-            return database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests).FirstOrDefault(m => m.Id == id);
+            return database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests).ThenInclude(mStud => mStud.AppUser).FirstOrDefault(m => m.Id == id);
         }
 
         // Update or create product

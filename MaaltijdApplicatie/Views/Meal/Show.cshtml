@@ -16,11 +16,13 @@
                 </span>
             }
             @if (Model.UserLoggedIn) {
-                @if (Model.UserIsRegistered) {
-                    <span class="badge badge-success m-1" style="float:right">
-                        <small>Aangemeld</small>
-                    </span>
-                }
+                <span class="badge badge-success m-1" style="float:right">
+                    @if (Model.UserIsRegistered) {
+                        <small>Je eet mee</small>
+                    } else if (Model.UserIsCook) {
+                        <small>Je kookt deze maaltijd</small>
+                    }
+                </span>
             }
         </h5>
     </div>
@@ -32,11 +34,19 @@
         <p class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</p>
         <p class="card-text">@Model.Meal?.StudentCook?.Name</p>
 
-
-
     </div>
 
+    <ul class="list-group">
+        @foreach (var mealStud in Model.Meal.StudentsGuests) {
+            <li class="list-group-item">@mealStud.AppUser.Name</li>
+        }
+    </ul>
+
 </div>
+
+<a asp-action="List" class="btn btn-info">
+    Terug
+</a>
 
 @if (Model.UserLoggedIn) {
 
@@ -62,15 +72,9 @@
 
         } else {
 
-            <form asp-action="Cancel" method="post">
-
-                <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
-
-                <button type="submit" class="btn btn-danger">
-                    Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
-                </button>
-
-            </form>
+            <a asp-action="Cancel" class="btn btn-danger" asp-route-mealId="@Model.Meal.Id">
+                Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+            </a>
 
         }
 

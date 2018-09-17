@@ -5,9 +5,11 @@
 <p class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</p>
 <p class="card-text">@Model.Meal?.StudentCook?.Name</p>
 
-<a asp-action="Show" class="btn btn-info" asp-route-mealId="@Model.Meal.Id">
-    Details
-</a>
+@if (Model.UserLoggedIn) {
+    <a asp-action="Show" class="btn btn-info" asp-route-mealId="@Model.Meal.Id">
+        Details
+    </a>
+}
 
 @if (Model.UserLoggedIn) {
 
@@ -33,7 +35,7 @@
 
         } else {
 
-            <a asp-action="Register" class="btn btn-danger" asp-route-mealId="@Model.Meal.Id">
+            <a asp-action="Cancel" class="btn btn-danger" asp-route-mealId="@Model.Meal.Id">
                     Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
             </a>
 
