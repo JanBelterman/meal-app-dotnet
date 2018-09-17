@@ -13,6 +13,8 @@ namespace MaaltijdApplicatie.Models.ViewModels {
 
         public bool UserIsRegistered { get; set; }
 
+        public bool UserIsCook { get; set; }
+
     }
 
 }

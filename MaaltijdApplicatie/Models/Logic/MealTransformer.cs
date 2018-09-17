@@ -25,7 +25,8 @@ namespace MaaltijdApplicatie.Models.Logic {
                     MonthString = d.ToString("MMMM"),
                     DayOfWeekString = UppercaseFirst(d.ToString("dddd")),
                     Meal = meal, // Insert meal or set null
-                    UserIsRegistered = CheckIfUserIsRegistered(meal, student)
+                    UserIsRegistered = CheckIfUserIsRegistered(meal, student),
+                    UserIsCook = CheckIfUserIsCook(meal, student)
                 };
 
                 mealDates.Add(mealDate);
@@ -57,7 +58,7 @@ namespace MaaltijdApplicatie.Models.Logic {
 
         }
 
-        static bool CheckIfUserIsRegistered(Meal meal, AppUser student) { // Change to lambda
+        private static bool CheckIfUserIsRegistered(Meal meal, AppUser student) { // Change to lambda
 
             if (meal != null) {
 
@@ -73,7 +74,21 @@ namespace MaaltijdApplicatie.Models.Logic {
 
         }
 
-        static string UppercaseFirst(string s) {
+        private static bool CheckIfUserIsCook(Meal meal, AppUser student) {
+
+            if (meal != null) {
+
+                if (meal?.StudentCook?.Id == student?.Id) {
+                    return true;
+                }
+
+            }
+
+            return false;
+
+        }
+
+        private static string UppercaseFirst(string s) {
 
             // Check for empty string.
             if (string.IsNullOrEmpty(s)) {

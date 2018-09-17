@@ -5,33 +5,39 @@
 <p class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</p>
 <p class="card-text">@Model.Meal?.StudentCook?.Name</p>
 
-@if (!Model.UserIsRegistered) {
+@if (Model.UserIsCook) {
 
-    <form asp-action="Register" method="post">
-
-        <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
-
-        <button type="submit" class="btn btn-success">
-            Mee eten <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
-        </button>
-
-
-    </form>
+    <a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
+        Bijwerken
+    </a>
 
 } else {
 
-    <form asp-action="Cancel" method="post">
+    @if (!Model.UserIsRegistered) {
 
-        <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
+        <form asp-action="Register" method="post">
 
-        <button type="submit" class="btn btn-danger">
-            Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
-        </button>
+            <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
 
-    </form>
+            <button type="submit" class="btn btn-success">
+                Mee eten <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+            </button>
+
+
+        </form>
+
+    } else {
+
+        <form asp-action="Cancel" method="post">
+
+            <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
+
+            <button type="submit" class="btn btn-danger">
+                Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+            </button>
+
+        </form>
+
+    }
 
 }
-
-<a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
-    Bijwerken
-</a>
