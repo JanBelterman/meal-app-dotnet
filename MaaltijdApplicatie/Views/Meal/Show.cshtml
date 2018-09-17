@@ -1,0 +1,79 @@
+﻿@model MealDate
+
+<div class="card bg-light mb-2">
+
+    <div class="card-header">
+        <h5>
+            @if (Model?.Date.Date == DateTime.Today.Date) {
+                @:Vandaag
+            } else {
+                @(Model.DayOfWeekString + " " + Model.Date.Day + " " + Model.MonthString);
+            }
+
+            @if (Model.Meal != null) {
+                <span class="badge badge-info m-1" style="float:right">
+                    <small>@Model.Meal?.Price?.ToString("c")</small>
+                </span>
+            }
+            @if (Model.UserLoggedIn) {
+                @if (Model.UserIsRegistered) {
+                    <span class="badge badge-success m-1" style="float:right">
+                        <small>Aangemeld</small>
+                    </span>
+                }
+            }
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        <h5 class="card-title">@Model.Meal?.Name</h5>
+        <p class="card-text">@Model.Meal?.Description</p>
+        <p class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</p>
+        <p class="card-text">@Model.Meal?.StudentCook?.Name</p>
+
+
+
+    </div>
+
+</div>
+
+@if (Model.UserLoggedIn) {
+
+    if (Model.UserIsCook) {
+
+        if (!Model.MealIsFull) {
+
+            <a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
+                Bijwerken
+            </a>
+
+        }
+
+    } else {
+
+        if (!Model.UserIsRegistered) {
+
+            if (!Model.MealIsFull) {
+                <a asp-action="Register" class="btn btn-success" asp-route-MealId="@Model.Meal.Id">
+                    Mee eten <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+                </a>
+            }
+
+        } else {
+
+            <form asp-action="Cancel" method="post">
+
+                <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
+
+                <button type="submit" class="btn btn-danger">
+                    Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+                </button>
+
+            </form>
+
+        }
+
+    }
+
+}

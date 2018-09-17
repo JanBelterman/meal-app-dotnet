@@ -22,9 +22,13 @@ namespace MaaltijdApplicatie.Controllers {
 
         // Renders a list with meals for coming 2 weeks
         public async Task<IActionResult> List() {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await userManager.FindByIdAsync(userId);
+            AppUser user = await GetUser();
             return View(MealTransformer.TransformMeals(repository.GetMeals(), user));
+        }
+
+        public async Task<IActionResult> Show(int mealId) {
+            AppUser student = await GetUser();
+            return View(MealTransformer.TransformIntoMealDate(repository.GetMeal(mealId), student));
         }
 
         // Renders a view to create a meal
@@ -139,8 +143,7 @@ namespace MaaltijdApplicatie.Controllers {
         }
 
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Cancel(MealDate mealDate) {
+        public async Task<IActionResult> Cancel(int mealId) {
 
             // Get user
             AppUser student = await GetUser();
@@ -149,7 +152,7 @@ namespace MaaltijdApplicatie.Controllers {
             if (student != null) {
 
                 // Remove studentMeal record with meal id and user id
-                repository.UnsubscribeFromMeal(mealDate.Meal.Id, GetUserId());
+                repository.UnsubscribeFromMeal(mealId, GetUserId());
 
             }
 

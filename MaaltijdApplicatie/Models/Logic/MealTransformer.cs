@@ -24,7 +24,7 @@ namespace MaaltijdApplicatie.Models.Logic {
                     Date = d,
                     MonthString = d.ToString("MMMM"),
                     DayOfWeekString = UppercaseFirst(d.ToString("dddd")),
-                    Meal = meal, // Insert meal or set null
+                    Meal = meal,
                     UserIsRegistered = CheckIfUserIsRegistered(meal, student),
                     UserIsCook = CheckIfUserIsCook(meal, student),
                     MealIsFull = meal?.StudentsGuests?.Count >= meal?.MaxGuests && false,
@@ -40,13 +40,17 @@ namespace MaaltijdApplicatie.Models.Logic {
 
         }
 
-        public static MealDate TransformIntoMealDate(Meal meal) {
+        public static MealDate TransformIntoMealDate(Meal meal, AppUser student = null) {
 
             MealDate mealDate = new MealDate {
                 Meal = meal,
                 Date = meal.DateTime,
                 MonthString = meal.DateTime.ToString("MMMM"),
-                DayOfWeekString = UppercaseFirst(meal.DateTime.ToString("dddd"))
+                DayOfWeekString = UppercaseFirst(meal.DateTime.ToString("dddd")),
+                UserIsRegistered = CheckIfUserIsRegistered(meal, student),
+                UserIsCook = CheckIfUserIsCook(meal, student),
+                MealIsFull = meal?.StudentsGuests?.Count >= meal?.MaxGuests && false,
+                UserLoggedIn = student != null
             };
 
             return mealDate;
