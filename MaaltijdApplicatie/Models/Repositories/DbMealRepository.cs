@@ -20,6 +20,10 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         }
 
+        public Meal GetMeal(int id) {
+            return database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests).FirstOrDefault(m => m.Id == id);
+        }
+
         // Update or create product
         public void SaveMeal(Meal meal) {
 
@@ -33,7 +37,9 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
                 if (dbEntry != null) {
                     dbEntry.Name = meal.Name;
-                    // Update other properies too
+                    dbEntry.Description = meal.Description;
+                    dbEntry.Price = meal.Price;
+                    dbEntry.MaxGuests = meal.MaxGuests;
                 }
 
             }

@@ -67,6 +67,65 @@ namespace MaaltijdApplicatie.Controllers {
         }
 
         [Authorize]
+        [HttpGet]
+        public IActionResult Edit(int mealId) {
+
+            Meal meal = repository.GetMeal(mealId);
+            string userId = GetUserId();
+
+            // Check if student is cook of that meal
+            if (meal.StudentCook.Id != userId) {
+                TempData["general_error="] = "Je kan alleen maaltijden wijzigen waar je zelf kok van bent";
+                return RedirectToAction("List");
+            }
+
+            // Check if no guests have registered
+            if (meal.StudentsGuests.Count > 0) {
+                TempData["general_error"] = "Je kan alleen maaltijden bijwerken waar nog niemand mee eet";
+                return RedirectToAction("List");
+            }
+
+            // Transfor single meal to contain all extra mealdate values (or create MealViewModel
+            MealDate mealDate = MealTransformer.TransformIntoMealDate(meal);
+
+            return View(mealDate);
+
+        }
+
+        // Updates a meal
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(MealDate mealDate) {
+
+            if (!ModelState.IsValid) {
+                return View(mealDate);
+            }
+
+            Meal meal = repository.GetMeal(mealDate.Meal.Id);
+            string userId = GetUserId();
+
+            // Check if student is cook of that meal
+            if (meal.StudentCook.Id != userId) {
+                TempData["general_error="] = "Je kan alleen maaltijden wijzigen waar je zelf kok van bent";
+                return RedirectToAction("List");
+            }
+
+            // Check if no guests have registered
+            if (meal.StudentsGuests.Count > 0) {
+                TempData["general_error"] = "Je kan alleen maaltijden bijwerken waar nog niemand mee eet";
+                return RedirectToAction("List");
+            }
+
+            // Update
+            repository.SaveMeal(mealDate.Meal);
+
+            // Return view with succes message
+            TempData["message"] = "Maaltijd succesvol bijgewerkt";
+            return RedirectToAction("List");
+
+        }
+
+        [Authorize]
         public async Task<IActionResult> Register(MealDate mealDate) {
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -108,6 +167,7 @@ namespace MaaltijdApplicatie.Controllers {
             return await userManager.FindByIdAsync(userId);
 
         }
+
         private string GetUserId() {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }

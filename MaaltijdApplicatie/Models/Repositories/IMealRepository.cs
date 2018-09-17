@@ -7,6 +7,8 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         IQueryable<Meal> GetMeals();
 
+        Meal GetMeal(int id);
+
         void SaveMeal(Meal meal);
 
         void RegisterForMeal(Meal meal, AppUser student);

@@ -37,6 +37,19 @@ namespace MaaltijdApplicatie.Models.Logic {
 
         }
 
+        public static MealDate TransformIntoMealDate(Meal meal) {
+
+            MealDate mealDate = new MealDate {
+                Meal = meal,
+                Date = meal.DateTime,
+                MonthString = meal.DateTime.ToString("MMMM"),
+                DayOfWeekString = UppercaseFirst(meal.DateTime.ToString("dddd"))
+            };
+
+            return mealDate;
+
+        }
+
         public static void AddDateStrings(MealDate mealDate) {
 
             mealDate.DayOfWeekString = UppercaseFirst(mealDate.Date.ToString("dddd"));
