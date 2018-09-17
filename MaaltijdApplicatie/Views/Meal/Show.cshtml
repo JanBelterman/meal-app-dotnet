@@ -30,8 +30,8 @@
     <div class="card-body">
 
         <h5 class="card-title">@Model.Meal?.Name</h5>
-        <p class="card-text">@Model.Meal?.Description</p>
-        <p class="card-text">@Model.Meal?.DateTime.ToShortTimeString()</p>
+        <h6 class="card-subtitle mb-2 text-muted">@Model.Meal?.Description</h6>
+        <p class="card-text mb-0">@Model.Meal?.DateTime.ToShortTimeString()</p>
         <p class="card-text">@Model.Meal?.StudentCook?.Name</p>
 
     </div>
@@ -52,7 +52,7 @@
 
     if (Model.UserIsCook) {
 
-        if (!Model.MealIsFull) {
+        if (Model.Meal.StudentsGuests.Count() == 0) {
 
             <a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
                 Bijwerken
@@ -66,14 +66,14 @@
 
             if (!Model.MealIsFull) {
                 <a asp-action="Register" class="btn btn-success" asp-route-MealId="@Model.Meal.Id">
-                    Mee eten <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+                    Mee eten <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0) / @Model.Meal.MaxGuests</span>
                 </a>
             }
 
         } else {
 
             <a asp-action="Cancel" class="btn btn-danger" asp-route-mealId="@Model.Meal.Id">
-                Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
+                Afzeggen <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0) / @Model.Meal.MaxGuests</span>
             </a>
 
         }
