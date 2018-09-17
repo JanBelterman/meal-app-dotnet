@@ -32,7 +32,8 @@
         <h5 class="card-title">@Model.Meal?.Name</h5>
         <h6 class="card-subtitle mb-2 text-muted">@Model.Meal?.Description</h6>
         <p class="card-text mb-0">@Model.Meal?.DateTime.ToShortTimeString()</p>
-        <p class="card-text">@Model.Meal?.StudentCook?.Name</p>
+        <p class="card-text mb-0">@Model.Meal?.StudentCook?.Name</p>
+        <p class="card-text">@Model.Meal?.MaxGuests studenten kunnen mee eten</p>
 
     </div>
 
