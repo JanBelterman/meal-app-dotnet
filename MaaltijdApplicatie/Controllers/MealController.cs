@@ -126,12 +126,12 @@ namespace MaaltijdApplicatie.Controllers {
         }
 
         [Authorize]
-        public async Task<IActionResult> Register(MealDate mealDate) {
+        public async Task<IActionResult> Register(int mealId) {
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await userManager.FindByIdAsync(userId);
+            Meal meal = repository.GetMeal(mealId);
+            AppUser student = await GetUser();
 
-            repository.RegisterForMeal(mealDate.Meal, user);
+            repository.RegisterForMeal(meal, student);
 
             TempData["message"] = "Succesvol aangemeld";
             return RedirectToAction("List");
@@ -140,13 +140,13 @@ namespace MaaltijdApplicatie.Controllers {
 
         [Authorize]
         [HttpPost]
-        public IActionResult Cancel(MealDate mealDate) {
+        public async Task<IActionResult> Cancel(MealDate mealDate) {
 
             // Get user
-            var user = GetUser();
+            AppUser student = await GetUser();
 
             // Sign user out
-            if (user != null) {
+            if (student != null) {
 
                 // Remove studentMeal record with meal id and user id
                 repository.UnsubscribeFromMeal(mealDate.Meal.Id, GetUserId());

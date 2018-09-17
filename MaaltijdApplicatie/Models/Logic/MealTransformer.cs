@@ -26,7 +26,8 @@ namespace MaaltijdApplicatie.Models.Logic {
                     DayOfWeekString = UppercaseFirst(d.ToString("dddd")),
                     Meal = meal, // Insert meal or set null
                     UserIsRegistered = CheckIfUserIsRegistered(meal, student),
-                    UserIsCook = CheckIfUserIsCook(meal, student)
+                    UserIsCook = CheckIfUserIsCook(meal, student),
+                    MealIsFull = meal?.StudentsGuests?.Count >= meal?.MaxGuests && false
                 };
 
                 mealDates.Add(mealDate);

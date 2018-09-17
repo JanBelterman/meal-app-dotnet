@@ -15,16 +15,11 @@
 
     @if (!Model.UserIsRegistered) {
 
-        <form asp-action="Register" method="post">
-
-            <input type="hidden" asp-for="Meal.Id" value=@Model.Meal.Id />
-
-            <button type="submit" class="btn btn-success">
+        if (!Model.MealIsFull) {
+            <a asp-action="Register" class="btn btn-success" asp-route-MealId="@Model.Meal.Id">
                 Mee eten <span class="badge badge-light">@(Model.Meal?.StudentsGuests?.Count() ?? 0)</span>
-            </button>
-
-
-        </form>
+            </a>
+        }
 
     } else {
 
