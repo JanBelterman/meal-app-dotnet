@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System;
 
 namespace MaaltijdApplicatie.Controllers {
 
@@ -42,25 +43,25 @@ namespace MaaltijdApplicatie.Controllers {
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Store(Meal meal) {
+        public async Task<IActionResult> Store(MealDate mealDate) {
+
+            // Get meal
+            Meal meal = mealDate.Meal;
 
             // Validate
             if (ModelState.IsValid) {
 
-                // Get user (student) who is cook
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var user = await userManager.FindByIdAsync(userId);
-                meal.StudentCook = user;
+                // Get StudentCook
+                AppUser student = await GetUser();
+                meal.StudentCook = student;
+
+                // Set date with time
+                meal.DateTime = new DateTime(meal.DateTime.Year, meal.DateTime.Month, meal.DateTime.Day, mealDate.Time.Hour, mealDate.Time.Minute, 0);
 
                 // Save to repo
                 repository.SaveMeal(meal);
 
             } else {
-                var mealDate = new MealDate() {
-                    Meal = meal,
-                    Date = meal.DateTime
-                };
-                MealTransformer.AddDateStrings(mealDate); // Does it add reference?
                 return View("Create", mealDate);
             }
 
@@ -121,6 +122,8 @@ namespace MaaltijdApplicatie.Controllers {
             }
 
             // Update
+            // Add time to meal
+            mealDate.Meal.DateTime = new DateTime(mealDate.Meal.DateTime.Year, mealDate.Meal.DateTime.Month, mealDate.Meal.DateTime.Day, mealDate.Time.Hour, mealDate.Time.Minute, 0);
             repository.SaveMeal(mealDate.Meal);
 
             // Return view with succes message

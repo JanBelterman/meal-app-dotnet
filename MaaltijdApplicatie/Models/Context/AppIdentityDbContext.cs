@@ -7,8 +7,7 @@ namespace Users.Models.Context {
 
     public class AppIdentityDbContext : IdentityDbContext<AppUser> {
 
-        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
-        : base(options) { }
+        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options) { }
         
         public DbSet<Meal> Meals { get; set; }
         public DbSet<MealStudent> MealStudents { get; set; }
@@ -18,13 +17,13 @@ namespace Users.Models.Context {
 
             base.OnModelCreating(builder);
 
+            // MealStudent primary key
             builder.Entity<MealStudent>().HasKey(t => new { t.MealId, t.AppUserId });
 
             builder.Entity<AppUser>().HasMany<MealStudent>(e => e.GuestOfMeals).WithOne(e => e.AppUser);
             builder.Entity<Meal>().HasOne<AppUser>(e => e.StudentCook).WithMany(e => e.CookOfMeals);
             builder.Entity<Meal>().HasMany<MealStudent>(e => e.StudentsGuests).WithOne(e => e.Meal);
             builder.Entity<Meal>().HasIndex(e => e.DateTime).IsUnique();
-
 
         }
 

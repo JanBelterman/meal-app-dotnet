@@ -45,6 +45,7 @@ namespace MaaltijdApplicatie.Models.Logic {
             MealDate mealDate = new MealDate {
                 Meal = meal,
                 Date = meal.DateTime,
+                Time = meal.DateTime,
                 MonthString = meal.DateTime.ToString("MMMM"),
                 DayOfWeekString = UppercaseFirst(meal.DateTime.ToString("dddd")),
                 UserIsRegistered = CheckIfUserIsRegistered(meal, student),

@@ -5,6 +5,9 @@
 <form asp-action="Store" method="post">
 
     <input type="hidden" asp-for="Meal.DateTime" value="@Model.Date" />
+    <input type="hidden" asp-for="Date" value="@Model.Date" />
+    <input type="hidden" asp-for="MonthString" value="@Model.MonthString" />
+    <input type="hidden" asp-for="DayOfWeekString" value="@Model.DayOfWeekString" />
 
     <div class="form-group">
         <label asp-for="Meal.Name"></label>
@@ -23,6 +26,12 @@
         <div><span asp-validation-for="Meal.Price" class="text-danger"></span></div>
         <input asp-for="Meal.Price" class="form-control" />
         <small class="form-text text-muted">Gebruik een , en geen . voor het gebruik van centen</small>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Time"></label>
+        <div><span asp-validation-for="Time" class="text-danger"></span></div>
+        <input asp-for="Time" class="form-control" />
     </div>
 
     <div class="form-group">
