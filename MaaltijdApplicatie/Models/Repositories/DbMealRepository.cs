@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
 using MaaltijdApplicatie.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 using Users.Models.Context;
@@ -14,15 +14,14 @@ namespace MaaltijdApplicatie.Models.Repositories {
             this.database = database;
         }
 
-        public IQueryable<Meal> GetMeals() {
+        public IQueryable<Meal> GetMeals() =>
+            database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests);
 
-            return database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests);
+        public Meal GetMeal(int id) =>
+            database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests).ThenInclude(mStud => mStud.AppUser).FirstOrDefault(m => m.Id == id);
 
-        }
-
-        public Meal GetMeal(int id) {
-            return database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests).ThenInclude(mStud => mStud.AppUser).FirstOrDefault(m => m.Id == id);
-        }
+        public IQueryable<Meal> GetMeals(DateTime startDate, DateTime endDate) =>
+            database.Meals.Include(meal => meal.StudentCook).Include(meal => meal.StudentsGuests).ThenInclude(mStud => mStud.AppUser).Where(m => m.DateTime.Date >= startDate.Date && m.DateTime.Date <= endDate.Date);
 
         // Update or create product
         public void SaveMeal(Meal meal) {

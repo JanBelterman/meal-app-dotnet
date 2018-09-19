@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Linq;
 using MaaltijdApplicatie.Models.Domain;
 
 namespace MaaltijdApplicatie.Models.Repositories {
@@ -8,6 +10,8 @@ namespace MaaltijdApplicatie.Models.Repositories {
         IQueryable<Meal> GetMeals();
 
         Meal GetMeal(int id);
+
+        IQueryable<Meal> GetMeals(DateTime startDate, DateTime endDate);
 
         void SaveMeal(Meal meal);
 

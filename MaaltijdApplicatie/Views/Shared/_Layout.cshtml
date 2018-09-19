@@ -46,19 +46,24 @@
     </nav>
 
     <!-- Content -->
-    <div class="col-12 mt-2">
+        <div class="row m-1">
+            <div class="col-3 mt-2 mb-2">
+                @await Component.InvokeAsync("Widget")
+            </div>
+            <div class="col-9 mt-2">
 
-        @if (TempData["message"] != null) {
-            <div class="alert alert-success mb-2">@TempData["message"]</div>
-        }
+                @if (TempData["message"] != null) {
+                    <div class="alert alert-success mb-2">@TempData["message"]</div>
+                }
 
-        @if (TempData["general_error"] != null) {
-            <div class="alert alert-danger mb-2">@TempData["error"]</div>
-        }
+                @if (TempData["general_error"] != null) {
+                    <div class="alert alert-danger mb-2">@TempData["error"]</div>
+                }
 
-        @RenderBody()
+                @RenderBody()
 
-</div>
+            </div>
+        </div>
 
 </body>
 
