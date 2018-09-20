@@ -49,7 +49,7 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         public void RegisterForMeal(Meal meal, AppUser student) {
 
-            database.MealStudents.Add(new MealStudent() { MealId = meal.Id, AppUserId = student.Id });
+            database.StudentGuests.Add(new StudentGuest() { MealId = meal.Id, AppUserId = student.Id });
 
             database.SaveChanges();
 
@@ -57,9 +57,9 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         public void UnsubscribeFromMeal(int mealId, string studentId) {
 
-            var mealStudent = database.MealStudents.FirstOrDefault(m => m.MealId == mealId && m.AppUserId == studentId);
+            var mealStudent = database.StudentGuests.FirstOrDefault(m => m.MealId == mealId && m.AppUserId == studentId);
             if (mealStudent != null) {
-                database.MealStudents.Remove(mealStudent);
+                database.StudentGuests.Remove(mealStudent);
             }
 
             database.SaveChanges();

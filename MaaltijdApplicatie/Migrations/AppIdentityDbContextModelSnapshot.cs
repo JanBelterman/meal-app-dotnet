@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Users.Models.Context;
 
 namespace MaaltijdApplicatie.Migrations
@@ -79,27 +80,28 @@ namespace MaaltijdApplicatie.Migrations
 
                     b.Property<DateTime>("DateTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
-                    b.Property<int>("MaxGuests");
+                    b.Property<int?>("MaxGuests")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal?>("Price")
+                        .IsRequired();
 
                     b.Property<string>("StudentCookId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DateTime")
-                        .IsUnique();
 
                     b.HasIndex("StudentCookId");
 
                     b.ToTable("Meals");
                 });
 
-            modelBuilder.Entity("MaaltijdApplicatie.Models.Domain.MealStudent", b =>
+            modelBuilder.Entity("MaaltijdApplicatie.Models.Domain.StudentGuest", b =>
                 {
                     b.Property<int>("MealId");
 
@@ -109,7 +111,7 @@ namespace MaaltijdApplicatie.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("MealStudents");
+                    b.ToTable("StudentGuests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -229,7 +231,7 @@ namespace MaaltijdApplicatie.Migrations
                         .HasForeignKey("StudentCookId");
                 });
 
-            modelBuilder.Entity("MaaltijdApplicatie.Models.Domain.MealStudent", b =>
+            modelBuilder.Entity("MaaltijdApplicatie.Models.Domain.StudentGuest", b =>
                 {
                     b.HasOne("MaaltijdApplicatie.Models.Domain.AppUser", "AppUser")
                         .WithMany("GuestOfMeals")

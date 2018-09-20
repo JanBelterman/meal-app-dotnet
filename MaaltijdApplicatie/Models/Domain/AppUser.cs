@@ -7,7 +7,7 @@ namespace MaaltijdApplicatie.Models.Domain {
 
         public string Name { get; set; }
         public virtual ICollection<Meal> CookOfMeals { get; set; } = new List<Meal>();
-        public virtual ICollection<MealStudent> GuestOfMeals { get; set; } = new List<MealStudent>();
+        public virtual ICollection<StudentGuest> GuestOfMeals { get; set; } = new List<StudentGuest>();
 
 
     }

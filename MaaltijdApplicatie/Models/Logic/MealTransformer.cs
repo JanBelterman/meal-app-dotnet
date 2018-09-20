@@ -69,7 +69,7 @@ namespace MaaltijdApplicatie.Models.Logic {
 
             if (meal != null) {
 
-                foreach (MealStudent mealStud in meal.StudentsGuests) {
+                foreach (StudentGuest mealStud in meal.StudentsGuests) {
                     if (mealStud?.AppUser?.Id == student?.Id) {
                         return true;
                     }

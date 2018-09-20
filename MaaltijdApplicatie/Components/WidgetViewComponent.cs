@@ -55,7 +55,7 @@ namespace MaaltijdApplicatie.Components {
             count = 0;
             // Get YouEat
             foreach (var ml in meals) {
-                MealStudent studGuest = (MealStudent) ml.StudentsGuests.FirstOrDefault(sg => sg.AppUserId == userId);
+                StudentGuest studGuest = (StudentGuest) ml.StudentsGuests.FirstOrDefault(sg => sg.AppUserId == userId);
                 if (studGuest != null) count++;
             }
             widgetData.YouEatTwoWeeks = "Je eet " + count + " keer mee";
