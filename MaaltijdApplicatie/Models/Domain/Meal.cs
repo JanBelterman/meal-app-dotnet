@@ -27,9 +27,9 @@ namespace MaaltijdApplicatie.Models.Domain {
         [Required(ErrorMessage = "Vul het maximaal aantal mee eters in")]
         public int? MaxGuests { get; set; }
 
-        public virtual AppUser StudentCook { get; set; }
+        public Student Cook { get; set; }
 
-        public virtual ICollection<StudentGuest> StudentsGuests { get; set; } = new List<StudentGuest>();
+        public ICollection<Guest> Guests { get; set; } = new List<Guest>();
 
     }
 

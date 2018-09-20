@@ -1,9 +1,9 @@
 ﻿namespace MaaltijdApplicatie.Models.Domain {
 
-    public class StudentGuest {
+    public class Guest {
 
-        public virtual AppUser AppUser { get; set; }
-        public string AppUserId { get; set; }
+        public Student Student { get; set; }
+        public int StudentId { get; set; }
 
         public Meal Meal { get; set; }
         public int MealId { get; set; }

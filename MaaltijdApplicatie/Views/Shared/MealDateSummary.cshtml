@@ -14,10 +14,10 @@
                 <span class="badge badge-info m-1" style="float:right">
                     <small>@Model.Meal?.Price?.ToString("c")</small>
                 </span>
-                @if (Model.UserLoggedIn) {
-                    @if (Model.UserIsRegistered || Model.UserIsCook) {
+                @if (ViewBag.UserIsLoggedIn) {
+                    @if (Model.UserHasJoined || Model.UserIsCook) {
                         <span class="badge badge-success m-1" style="float:right">
-                            @if (Model.UserIsRegistered) {
+                            @if (Model.UserHasJoined) {
                                 <small>Je eet mee</small>
                             } else if (Model.UserIsCook) {
                                 <small>Je kookt deze maaltijd</small>

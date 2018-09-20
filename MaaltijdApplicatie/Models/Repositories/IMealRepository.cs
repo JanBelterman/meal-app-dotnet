@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using MaaltijdApplicatie.Models.Domain;
 
@@ -15,8 +14,8 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         void SaveMeal(Meal meal);
 
-        void RegisterForMeal(Meal meal, AppUser student);
-        void UnsubscribeFromMeal(int mealId, string studentId);
+        void JoinMeal(Meal meal, Student student);
+        void LeaveMeal(int mealId, int studentId);
 
     }
 

@@ -46,10 +46,12 @@
     </nav>
 
     <!-- Content -->
-        <div class="row m-1">
+    <div class="row m-1">
+        @if (User.Identity.IsAuthenticated) {
             <div class="col-3 mt-2 mb-2">
                 @await Component.InvokeAsync("Widget")
             </div>
+        }
             <div class="col-9 mt-2">
 
                 @if (TempData["message"] != null) {

@@ -6,52 +6,55 @@ using System.Linq;
 
 namespace MaaltijdApplicatie.Models.Logic {
 
-    // Transforms meals, so that all dates are added to the list for the coming 2 weeks and dates are filled with available meals
+    // Converts meal into meal dates that contain extra information needed in views
+    // The list method also adds days to fill two weeks
     public class MealTransformer {
 
-        public static IEnumerable<MealDate> TransformMeals(IEnumerable<Meal> meals, AppUser student) {
+        // Transforms a list of meals into meal dates
+        public static ICollection<MealDate> TransformMeals(IEnumerable<Meal> meals, Student student) {
 
-            // Create list
-            List<MealDate> mealDates = new List<MealDate>();
+            // Create model
+            ICollection<MealDate> mealDates = new List<MealDate>();
 
-            // Get all dates for coming 2 weeks
-            // Insert meals in correct dates
+            // Get all dates for coming 2 weeks -> loop through
+            // Insert information regarding this meal in the mealdate model
             foreach (var d in DateTime.Now.GetDatesForComingTwoWeeks()) {
 
+                // Get meal for this date
                 var meal = meals.FirstOrDefault(m => m.DateTime.Date == d.Date);
-
+                // Store information
                 var mealDate = new MealDate() {
                     Date = d,
                     MonthString = d.ToString("MMMM"),
                     DayOfWeekString = UppercaseFirst(d.ToString("dddd")),
                     Meal = meal,
-                    UserIsRegistered = CheckIfUserIsRegistered(meal, student),
+                    UserHasJoined = CheckIfUserIsRegistered(meal, student),
                     UserIsCook = CheckIfUserIsCook(meal, student),
-                    MealIsFull = meal?.StudentsGuests?.Count >= meal?.MaxGuests && false,
-                    UserLoggedIn = student != null
+                    MealIsFull = meal?.Guests?.Count >= meal?.MaxGuests && false
                 };
-
+                // Add meal date to model
                 mealDates.Add(mealDate);
 
             }
 
-            // Return list
+            // Return model
             return mealDates;
 
         }
 
-        public static MealDate TransformIntoMealDate(Meal meal, AppUser student = null) {
+        // Transforms a single meal into meal date
+        public static MealDate TransformIntoMealDate(Meal meal, Student student = null) {
 
+            // Store information
             MealDate mealDate = new MealDate {
-                Meal = meal,
                 Date = meal.DateTime,
                 Time = meal.DateTime,
                 MonthString = meal.DateTime.ToString("MMMM"),
                 DayOfWeekString = UppercaseFirst(meal.DateTime.ToString("dddd")),
-                UserIsRegistered = CheckIfUserIsRegistered(meal, student),
+                Meal = meal,
+                UserHasJoined = CheckIfUserIsRegistered(meal, student),
                 UserIsCook = CheckIfUserIsCook(meal, student),
-                MealIsFull = meal?.StudentsGuests?.Count >= meal?.MaxGuests && false,
-                UserLoggedIn = student != null
+                MealIsFull = meal?.Guests?.Count >= meal?.MaxGuests && false
             };
 
             return mealDate;
@@ -65,12 +68,12 @@ namespace MaaltijdApplicatie.Models.Logic {
 
         }
 
-        private static bool CheckIfUserIsRegistered(Meal meal, AppUser student) { // Change to lambda
+        private static bool CheckIfUserIsRegistered(Meal meal, Student student) { // Change to lambda
 
             if (meal != null) {
 
-                foreach (StudentGuest mealStud in meal.StudentsGuests) {
-                    if (mealStud?.AppUser?.Id == student?.Id) {
+                foreach (Guest guest in meal.Guests) {
+                    if (guest?.Student?.Id == student?.Id) {
                         return true;
                     }
                 }
@@ -83,11 +86,11 @@ namespace MaaltijdApplicatie.Models.Logic {
 
         }
 
-        private static bool CheckIfUserIsCook(Meal meal, AppUser student) {
+        private static bool CheckIfUserIsCook(Meal meal, Student student) {
 
             if (meal != null) {
 
-                if (meal?.StudentCook?.Id == student?.Id) {
+                if (meal?.Cook?.Id == student?.Id) {
                     return true;
                 }
 

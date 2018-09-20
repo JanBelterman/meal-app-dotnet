@@ -6,8 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Users.Models.Context;
 using Microsoft.AspNetCore.Identity;
-using MaaltijdApplicatie.Models.Domain;
 using System.Globalization;
+using MaaltijdApplicatie.Models.Context;
 
 namespace MaaltijdApplicatie {
 
@@ -15,21 +15,31 @@ namespace MaaltijdApplicatie {
 
         public Startup(IConfiguration configuration) =>
             Configuration = configuration;
+
         public IConfiguration Configuration { get; }
 
-        // Adding services to the container
+        // Adding services
         public void ConfigureServices(IServiceCollection services) {
 
+            // Add domain database
+            services.AddDbContext<AppDomainDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration["Data:MealAppDomainDb:ConnectionString"]));
+
+            // Add identity database
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration["Data:MaaltijdApplicatieIdentity:ConnectionString"]));
+                    Configuration["Data:MealAppIdentityDb:ConnectionString"]));
 
-            services.AddIdentity<AppUser, IdentityRole>()
+            // Add identity support
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add meal repo implementation to container
+            // Meal repo injection
             services.AddTransient<IMealRepository, DbMealRepository>();
+            // Student repo injection
+            services.AddTransient<IStudentRepository, DbStudentRepository>();
 
             // Add MVC
             services.AddMvc();
@@ -52,6 +62,8 @@ namespace MaaltijdApplicatie {
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
+
+            // Use identity
             app.UseAuthentication();
 
             // Configure http request routes
