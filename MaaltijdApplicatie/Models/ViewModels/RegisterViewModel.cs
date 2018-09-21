@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MaaltijdApplicatie.Models.ViewModels {
 
-    public class AppUserRegisterViewModel {
+    public class RegisterViewModel {
 
         [DisplayName("Gebruikersnaam")]
         [Required(ErrorMessage = "Vul een gebruikersnaam in")]

@@ -14,8 +14,7 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         void SaveMeal(Meal meal);
 
-        void JoinMeal(Meal meal, Student student);
-        void LeaveMeal(int mealId, int studentId);
+        void Save();
 
     }
 

@@ -1,4 +1,4 @@
-﻿@model AppUserRegisterViewModel
+﻿@model RegisterViewModel
 
 <form asp-action="Create" method="post">
 
@@ -31,6 +31,10 @@
         <div><span asp-validation-for="Number" class="text-danger"></span></div>
         <input asp-for="Number" class="form-control" />
     </div>
+
+    @if (TempData["register_error"] != null) {
+        <div class="alert alert-danger mb-3 ">@TempData["register_error"]</div>
+    }
 
     <button type="submit" class="btn btn-primary">Aanmaken</button>
 

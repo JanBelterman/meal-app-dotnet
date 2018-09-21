@@ -31,7 +31,7 @@ namespace MaaltijdApplicatie.Controllers {
         // Creates and stores a user and student record
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Create(AppUserRegisterViewModel register) {
+        public async Task<IActionResult> Create(RegisterViewModel register) {
 
             // Check if user filled in form correctly
             if (ModelState.IsValid) {
@@ -56,13 +56,13 @@ namespace MaaltijdApplicatie.Controllers {
                     };
                     studentRepository.SaveStudent(student);
                     // Redirect and show message
-                    TempData["message"] = "Account aangemaakt";
+                    TempData["success"] = "Account aangemaakt";
                     return RedirectToAction("List", "Meal");
 
                 } else {
                     // Get errors
                     foreach (IdentityError error in result.Errors) {
-                        ModelState.AddModelError("", error.Description);
+                        TempData["register_error"] = "Gebruikersnaam niet meer beschikbaar";
                     }
                 }
 
@@ -83,7 +83,7 @@ namespace MaaltijdApplicatie.Controllers {
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(AppUserLoginViewModel loginModel) {
+        public async Task<IActionResult> Login(LoginViewModel loginModel) {
 
             // Check if user filled in login form correctly
             if (ModelState.IsValid) {
