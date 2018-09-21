@@ -23,7 +23,7 @@ namespace MaaltijdApplicatie.Controllers {
 
         // Renders a list with meals for coming 2 weeks
         [AllowAnonymous]
-        public IActionResult List() {
+        public ViewResult List() {
             // Get student from logged in user
             Student student = studentRepository.GetStudent(GetUserId());
             ViewBag.UserIsLoggedIn = student != null;
