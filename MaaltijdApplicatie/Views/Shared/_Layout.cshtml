@@ -57,14 +57,14 @@
             }
             <div class="col-md-9 mt-2">
 
-                @if (TempData["message"] != null) {
+                @if (TempData["success"] != null) {
                     <div class="alert alert-success aler-dismissible mb-2">
-                        @TempData["message"]
+                        @TempData["success"]
                         <a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>
                     </div>
                 }
 
-                @if (TempData["general_error"] != null) {
+                @if (TempData["error"] != null) {
                     <div class="alert alert-danger aler-dismissible mb-2">
                         @TempData["error"]
                         <a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>

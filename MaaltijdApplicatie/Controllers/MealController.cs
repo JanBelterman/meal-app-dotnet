@@ -69,7 +69,7 @@ namespace MaaltijdApplicatie.Controllers {
             }
 
             // Return user to main view and show success message
-            TempData["message"] = "Maaltijd aangemaakt";
+            TempData["success"] = "Maaltijd aangemaakt";
             return RedirectToAction("List");
 
         }
@@ -93,7 +93,7 @@ namespace MaaltijdApplicatie.Controllers {
             }
             // Render main view -> Show error message
             else {
-                TempData["general_error"] = result.Message;
+                TempData["error"] = result.Message;
                 return RedirectToAction("List");
             }
 
@@ -119,7 +119,7 @@ namespace MaaltijdApplicatie.Controllers {
 
             // Meal cannot be edited by student -> add with error
             if (!result.WasSuccessful) {
-                TempData["general_error"] = result.Message;
+                TempData["error"] = result.Message;
             }
             // Meal can be edited by student -> update meal -> add success message
             else {
@@ -127,7 +127,7 @@ namespace MaaltijdApplicatie.Controllers {
                 mealDate.Meal.DateTime = new DateTime(mealDate.Meal.DateTime.Year, mealDate.Meal.DateTime.Month, mealDate.Meal.DateTime.Day, mealDate.Time.Hour, mealDate.Time.Minute, 0);
                 // Update meal in database
                 mealRepository.SaveMeal(mealDate.Meal);
-                TempData["message"] = "Maaltijd succesvol bijgewerkt";
+                TempData["success"] = "Maaltijd succesvol bijgewerkt";
             }
 
             return RedirectToAction("List");
@@ -148,11 +148,11 @@ namespace MaaltijdApplicatie.Controllers {
             // Save to database -> show success message
             if (result.WasSuccessful) {
                 mealRepository.Save();
-                TempData["message"] = result.Message;
+                TempData["success"] = result.Message;
             }
             // Show error message
             else {
-                TempData["general_error"] = result.Message;
+                TempData["error"] = result.Message;
             }
 
             // Render main view
@@ -173,11 +173,11 @@ namespace MaaltijdApplicatie.Controllers {
             // Save to database -> show success message
             if (result.WasSuccessful) {
                 mealRepository.Save();
-                TempData["message"] = result.Message;
+                TempData["success"] = result.Message;
             }
             // Show error message
             else {
-                TempData["general_error"] = result.Message;
+                TempData["error"] = result.Message;
             }
 
             // Render main view

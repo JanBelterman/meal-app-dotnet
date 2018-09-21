@@ -56,7 +56,7 @@ namespace MaaltijdApplicatie.Controllers {
                     };
                     studentRepository.SaveStudent(student);
                     // Redirect and show message
-                    TempData["message"] = "Account aangemaakt";
+                    TempData["success"] = "Account aangemaakt";
                     return RedirectToAction("List", "Meal");
 
                 } else {
