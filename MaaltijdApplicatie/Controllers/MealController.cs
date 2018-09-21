@@ -6,6 +6,7 @@ using MaaltijdApplicatie.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System;
+using System.Linq;
 
 namespace MaaltijdApplicatie.Controllers {
 
@@ -172,17 +173,21 @@ namespace MaaltijdApplicatie.Controllers {
 
             // Get student
             Student student = studentRepository.GetStudent(GetUserId());
+            // Get meal
+            Meal meal = mealRepository.GetMeal(mealId);
 
-            // Check if user has joined this meal
-            if (student != null) {
-
-                // Remove student from guests
+            // Check if user is a student & if student has joined this meal
+            if (student == null) {
+                TempData["general_error"] = "Je kan je niet afmelden voor een maaltijd waar je niet voor aangemeld bent";
+            } else if (!meal.Guests.Any(m => m.StudentId == student.Id)) {
+                TempData["general_error"] = "Je kan je niet afmelden voor een maaltijd waar je niet voor aangemeld bent";
+            } else {
+                // User has joined -> student can leave meal -> add succes message
                 mealRepository.LeaveMeal(mealId, student.Id);
-
+                TempData["message"] = "Succesvol afgemeld";
             }
 
-            // Render main view -> show succes message
-            TempData["message"] = "Succesvol afgemeld";
+            // Render main view -> show error of succes message
             return RedirectToAction("List");
 
         }
