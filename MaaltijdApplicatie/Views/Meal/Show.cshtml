@@ -1,0 +1,84 @@
+﻿@model MealDate
+
+<div class="card bg-light mb-2">
+
+    <div class="card-header">
+        <h5>
+            @if (Model?.Date.Date == DateTime.Today.Date) {
+                @:Vandaag
+            } else {
+                @(Model.DayOfWeekString + " " + Model.Date.Day + " " + Model.MonthString);
+            }
+
+            @if (Model.Meal != null) {
+                <span class="badge badge-info m-1" style="float:right">
+                    <small>@Model.Meal?.Price?.ToString("c")</small>
+                </span>
+            }
+            @if (ViewBag.UserIsLoggedIn) {
+                <span class="badge badge-success m-1" style="float:right">
+                    @if (Model.UserHasJoined) {
+                        <small>Je eet mee</small>
+                    } else if (Model.UserIsCook) {
+                        <small>Je kookt deze maaltijd</small>
+                    }
+                </span>
+            }
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        <h5 class="card-title">@Model.Meal?.Name</h5>
+        <h6 class="card-subtitle mb-2 text-muted">@Model.Meal?.Description</h6>
+        <p class="card-text mb-0">@Model.Meal?.DateTime.ToShortTimeString()</p>
+        <p class="card-text mb-0">@Model.Meal?.Cook?.Name</p>
+        <p class="card-text">@Model.Meal?.MaxGuests studenten kunnen mee eten</p>
+
+    </div>
+
+    <ul class="list-group">
+        @foreach (var mealStud in Model.Meal.Guests) {
+            <li class="list-group-item">@mealStud.Student.Name</li>
+        }
+    </ul>
+
+</div>
+
+<a asp-action="List" class="btn btn-info">
+    Terug
+</a>
+
+@if (ViewBag.UserIsLoggedIn) {
+
+    if (Model.UserIsCook) {
+
+        if (Model.Meal.Guests.Count() == 0) {
+
+            <a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
+                Bijwerken
+            </a>
+
+        }
+
+    } else {
+
+        if (!Model.UserHasJoined) {
+
+            if (!Model.MealIsFull) {
+                <a asp-action="Join" class="btn btn-success" asp-route-MealId="@Model.Meal.Id">
+                    Mee eten <span class="badge badge-light">@(Model.Meal?.Guests?.Count() ?? 0) / @Model.Meal.MaxGuests</span>
+                </a>
+            }
+
+        } else {
+
+            <a asp-action="Leave" class="btn btn-danger" asp-route-mealId="@Model.Meal.Id">
+                Afzeggen <span class="badge badge-light">@(Model.Meal?.Guests?.Count() ?? 0) / @Model.Meal.MaxGuests</span>
+            </a>
+
+        }
+
+    }
+
+}

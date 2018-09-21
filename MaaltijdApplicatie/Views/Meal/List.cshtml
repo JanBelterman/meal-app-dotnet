@@ -1,0 +1,7 @@
+﻿@model IEnumerable<MealDate>
+
+@foreach (var m in Model) {
+    
+    @await Html.PartialAsync("MealdateSummary", m)
+
+}

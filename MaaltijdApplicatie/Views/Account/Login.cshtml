@@ -1,0 +1,27 @@
+﻿@model AppUserLoginViewModel
+
+<form asp-action="Login" method="post">
+
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <div><span asp-validation-for="Username" class="text-danger"></span></div>
+        <input asp-for="Username" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <div><span asp-validation-for="Password" class="text-danger"></span></div>
+        <input asp-for="Password" class="form-control" />
+    </div>
+
+    @if (TempData["login_error"] != null) {
+        <div class="alert alert-danger mb-3 ">@TempData["login_error"]</div>
+    }
+
+    <button class="btn btn-primary" type="submit">Log in</button>
+
+    <button formmethod="get" asp-action="Create" class="btn btn-secondary">
+        Registreren
+    </button>
+
+</form>

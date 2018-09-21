@@ -1,0 +1,39 @@
+﻿@model AppUserRegisterViewModel
+
+<form asp-action="Create" method="post">
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <div><span asp-validation-for="Name" class="text-danger"></span></div>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <div><span asp-validation-for="Username" class="text-danger"></span></div>
+        <input asp-for="Username" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <div><span asp-validation-for="Password" class="text-danger"></span></div>
+        <input asp-for="Password" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <div><span asp-validation-for="Email" class="text-danger"></span></div>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Number"></label>
+        <div><span asp-validation-for="Number" class="text-danger"></span></div>
+        <input asp-for="Number" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Aanmaken</button>
+
+    <a asp-controller="Meal" asp-action="List" class="btn btn-secondary">Terug</a>
+
+</form>

@@ -1,0 +1,46 @@
+﻿@model MealDate
+
+<div class="card bg-light mb-2">
+
+    <div class="card-header">
+        <h5>
+            @if (Model?.Date.Date == DateTime.Today.Date) {
+                @:Vandaag
+            } else {
+                @(Model.DayOfWeekString + " " + Model.Date.Day + " " + Model.MonthString);
+            }
+
+            @if (Model.Meal != null) {
+                <span class="badge badge-info m-1" style="float:right">
+                    <small>@Model.Meal?.Price?.ToString("c")</small>
+                </span>
+                @if (ViewBag.UserIsLoggedIn) {
+                    @if (Model.UserHasJoined || Model.UserIsCook) {
+                        <span class="badge badge-success m-1" style="float:right">
+                            @if (Model.UserHasJoined) {
+                                <small>Je eet mee</small>
+                            } else if (Model.UserIsCook) {
+                                <small>Je kookt deze maaltijd</small>
+                            }
+                        </span>
+                    }
+                }
+            }
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        @if (Model.Meal != null) {
+
+            @await Html.PartialAsync("MealDateSummaryWithMeal", Model);
+
+        } else {
+
+            @await Html.PartialAsync("MealDateSummaryWithoutMeal", Model);
+
+        }
+
+    </div>
+
+</div>

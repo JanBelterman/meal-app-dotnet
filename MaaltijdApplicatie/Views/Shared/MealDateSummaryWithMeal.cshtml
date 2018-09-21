@@ -1,0 +1,46 @@
+﻿@model MealDate
+
+<h5 class="card-title">@Model.Meal?.Name</h5>
+<h6 class="card-subtitle mb-2 text-muted">@Model.Meal?.Description</h6>
+<p class="card-text mb-0">@Model.Meal?.DateTime.ToShortTimeString()</p>
+<p class="card-text">@Model.Meal?.Cook?.Name</p>
+
+@if (ViewBag.UserIsLoggedIn) {
+    <a asp-action="Show" class="btn btn-info" asp-route-mealId="@Model.Meal.Id">
+        Details
+    </a>
+}
+
+@if (ViewBag.UserIsLoggedIn) {
+
+    if (Model.UserIsCook) {
+
+        if (Model.Meal.Guests.Count() == 0) {
+
+            <a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
+                Bijwerken
+            </a>
+
+        }
+
+    } else {
+
+        if (!Model.UserHasJoined) {
+
+            if (!Model.MealIsFull) {
+                <a asp-action="Join" class="btn btn-success" asp-route-mealId="@Model.Meal.Id">
+                    Mee eten <span class="badge badge-light">@(Model.Meal?.Guests?.Count() ?? 0) / @Model.Meal.MaxGuests</span>
+                </a>
+            }
+
+        } else {
+
+            <a asp-action="Leave" class="btn btn-danger" asp-route-mealId="@Model.Meal.Id">
+                    Afzeggen <span class="badge badge-light">@(Model.Meal?.Guests?.Count() ?? 0) / @Model.Meal.MaxGuests</span>
+            </a>
+
+        }
+
+    }
+
+}

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>MaaltijdApplicatie</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Validation error styles -->
+    <style>
+        .input-validation-error {
+            border-color: red;
+            background-color: #fee;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
+
+        <a class="navbar-brand" asp-action="List" asp-controller="Meal">Maaltijd app</a>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            <div class="navbar-nav mr-auto">
+            </div>
+
+            <div class="navbar-nav">
+                @if (User.Identity.IsAuthenticated) {
+                    <a class="nav-item nav-link" asp-controller="Account" asp-action="Edit">Hallo @User.Identity.Name</a>
+                    <a class="nav-item nav-link" asp-controller="Account" asp-action="Logout">Log uit</a>
+                } else {
+                    <a class="nav-item nav-link" asp-controller="Account" asp-action="Create">Registreren</a>
+                    <a class="nav-item nav-link" asp-controller="Account" asp-action="Login">Log in</a>
+                }
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- Content -->
+    <div class="row m-1">
+        @if (User.Identity.IsAuthenticated) {
+            <div class="col-3 mt-2 mb-2">
+                @await Component.InvokeAsync("Widget")
+            </div>
+        }
+            <div class="col-9 mt-2">
+
+                @if (TempData["message"] != null) {
+                    <div class="alert alert-success aler-dismissible mb-2">
+                        @TempData["message"]
+                        <a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>
+                    </div>
+                }
+
+                @if (TempData["general_error"] != null) {
+                    <div class="alert alert-danger aler-dismissible mb-2">
+                        @TempData["error"]
+                        <a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>
+                    </div>
+                }
+
+                @RenderBody()
+
+            </div>
+        </div>
+
+</body>
+
+</html>
