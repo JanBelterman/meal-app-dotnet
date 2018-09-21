@@ -4,15 +4,14 @@ using MaaltijdApplicatie.Models.Logic;
 using MaaltijdApplicatie.Models.ViewModels;
 using MaaltijdApplicatie.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using System;
-using System.Linq;
+using System.Security.Claims;
 
 namespace MaaltijdApplicatie.Controllers {
 
     [Authorize]
     public class MealController : Controller {
-
+        
         private IMealRepository mealRepository;
         private IStudentRepository studentRepository;
 
@@ -84,20 +83,19 @@ namespace MaaltijdApplicatie.Controllers {
             // Get student
             Student student = studentRepository.GetStudent(GetUserId());
 
-            // Check if student is cook of that meal, I.E. if user is allowed to edit meal
-            if (meal.Cook.Id != student.Id) {
-                TempData["general_error="] = "Je kan alleen maaltijden wijzigen waar je zelf kok van bent";
+            // Check if meal can be edited by student
+            DomainMethodResult result = meal.AllowedToEdit(student);
+
+            // Render edit view
+            if (result.WasSuccessful) {
+                // Render edit view with => pass meal date to fill in values
+                return View(MealTransformer.TransformIntoMealDate(meal));
+            }
+            // Render main view -> Show error message
+            else {
+                TempData["general_error"] = result.Message;
                 return RedirectToAction("List");
             }
-
-            // Check if no guests have registered, I.E. if user is allowed to edit meal
-            if (meal.Guests.Count > 0) {
-                TempData["general_error"] = "Je kan alleen maaltijden bijwerken waar nog niemand mee eet";
-                return RedirectToAction("List");
-            }
-
-            // Render edit view with => pass meal date to fill in values
-            return View(MealTransformer.TransformIntoMealDate(meal));
 
         }
 
@@ -111,30 +109,27 @@ namespace MaaltijdApplicatie.Controllers {
                 return View(mealDate);
             }
 
-            // Get meal => to validate cook and guest properties
+            // Get meal
             Meal meal = mealRepository.GetMeal(mealDate.Meal.Id);
             // Get student
             Student student = studentRepository.GetStudent(GetUserId());
 
-            // Check if student is cook of that meal, I.E. if user is allowed to edit meal
-            if (meal.Cook.Id != student.Id) {
-                TempData["general_error="] = "Je kan alleen maaltijden wijzigen waar je zelf kok van bent";
-                return RedirectToAction("List");
+            // Check if meal can be edited by student
+            DomainMethodResult result = meal.AllowedToEdit(student);
+
+            // Meal cannot be edited by student -> add with error
+            if (!result.WasSuccessful) {
+                TempData["general_error"] = result.Message;
+            }
+            // Meal can be edited by student -> update meal -> add success message
+            else {
+                // Combine date and time
+                mealDate.Meal.DateTime = new DateTime(mealDate.Meal.DateTime.Year, mealDate.Meal.DateTime.Month, mealDate.Meal.DateTime.Day, mealDate.Time.Hour, mealDate.Time.Minute, 0);
+                // Update meal in database
+                mealRepository.SaveMeal(mealDate.Meal);
+                TempData["message"] = "Maaltijd succesvol bijgewerkt";
             }
 
-            // Check if no guests have registered, I.E. if user is allowed to edit meal
-            if (meal.Guests.Count > 0) {
-                TempData["general_error"] = "Je kan alleen maaltijden bijwerken waar nog niemand mee eet";
-                return RedirectToAction("List");
-            }
-            
-            // Combine date and time
-            mealDate.Meal.DateTime = new DateTime(mealDate.Meal.DateTime.Year, mealDate.Meal.DateTime.Month, mealDate.Meal.DateTime.Day, mealDate.Time.Hour, mealDate.Time.Minute, 0);
-            // Update meal in database
-            mealRepository.SaveMeal(mealDate.Meal);
-
-            // Render main view -> show success message
-            TempData["message"] = "Maaltijd succesvol bijgewerkt";
             return RedirectToAction("List");
 
         }
@@ -147,23 +142,20 @@ namespace MaaltijdApplicatie.Controllers {
             // Get student
             Student student = studentRepository.GetStudent(GetUserId());
 
-            // Check if student is not the cook of the meal
-            if (meal.Cook.Id == student.Id) {
-                TempData["general_error"] = "Je kan niet mee eten aan een maaltijd die je zelf kookt";
-                return RedirectToAction("List");
+            // Attemt to join student in meal
+            DomainMethodResult result = meal.Join(student);
+
+            // Save to database -> show success message
+            if (result.WasSuccessful) {
+                mealRepository.Save();
+                TempData["message"] = result.Message;
+            }
+            // Show error message
+            else {
+                TempData["general_error"] = result.Message;
             }
 
-            // Check if meal has free space
-            if (meal.Guests.Count >= meal.MaxGuests) {
-                TempData["general_error"] = "Je kan niet meer mee eten, alle plekken zijn bezet";
-                return RedirectToAction("List");
-            }
-
-            // Add user to guests
-            mealRepository.JoinMeal(meal, student);
-
-            // Render main view -> show success message
-            TempData["message"] = "Succesvol aangemeld";
+            // Render main view
             return RedirectToAction("List");
 
         }
@@ -176,18 +168,19 @@ namespace MaaltijdApplicatie.Controllers {
             // Get meal
             Meal meal = mealRepository.GetMeal(mealId);
 
-            // Check if user is a student & if student has joined this meal
-            if (student == null) {
-                TempData["general_error"] = "Je kan je niet afmelden voor een maaltijd waar je niet voor aangemeld bent";
-            } else if (!meal.Guests.Any(m => m.StudentId == student.Id)) {
-                TempData["general_error"] = "Je kan je niet afmelden voor een maaltijd waar je niet voor aangemeld bent";
-            } else {
-                // User has joined -> student can leave meal -> add succes message
-                mealRepository.LeaveMeal(mealId, student.Id);
-                TempData["message"] = "Succesvol afgemeld";
+            // Attempt to leave student from meal
+            DomainMethodResult result = meal.Leave(student);
+            // Save to database -> show success message
+            if (result.WasSuccessful) {
+                mealRepository.Save();
+                TempData["message"] = result.Message;
+            }
+            // Show error message
+            else {
+                TempData["general_error"] = result.Message;
             }
 
-            // Render main view -> show error of succes message
+            // Render main view
             return RedirectToAction("List");
 
         }
