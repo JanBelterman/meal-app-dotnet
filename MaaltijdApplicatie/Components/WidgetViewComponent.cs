@@ -30,16 +30,16 @@ namespace MaaltijdApplicatie.Components {
             // Get TodayInfo
             Meal meal = (Meal) meals.FirstOrDefault(m => m.DateTime.Date == DateTime.Today.Date);
             if (meal != null) {
-                widgetData.TodayInfo = "Vandaag eten er " + (meal.Guests.Count + 1) + " studenten mee";
+                widgetData.TodayInfo = (meal.Guests.Count + 1) + " eters vandaag";
             } else {
-                widgetData.TodayInfo = "Er wordt niet gekookt vandaag";
+                widgetData.TodayInfo = "geen maaltijd vandaag";
             }
             // Get TomorrowInfo
             Meal tomMeal = (Meal) meals.FirstOrDefault(m => m.DateTime.Date == DateTime.Today.AddDays(1).Date);
             if (tomMeal != null) {
-                widgetData.TomorrowInfo = "Morgen eten er " + (tomMeal.Guests.Count + 1) + " studenten mee";
+                widgetData.TomorrowInfo = (tomMeal.Guests.Count + 1) + " eters morgen";
             } else {
-                widgetData.TomorrowInfo = "Er word nog niet gekookt morgen";
+                widgetData.TomorrowInfo = "geen maaltijd morgen";
             }
             // Get YouCookToday
             var user = User as ClaimsPrincipal;
@@ -47,12 +47,12 @@ namespace MaaltijdApplicatie.Components {
             Student student = studentRepository.GetStudent(userId);
             if (meal != null) {
                 if (meal.Cook.Id == student.Id) {
-                    widgetData.YouCookToday = "Je moet vandaag koken";
+                    widgetData.YouCookToday = "Jij kookt vandaag";
                 } else {
-                    widgetData.YouCookToday = "Je hoeft vandaag niet te koken";
+                    widgetData.YouCookToday = "Jij kookt vandaag niet";
                 }
             } else {
-                widgetData.YouCookToday = "Je hoeft vandaag niet te koken";
+                widgetData.YouCookToday = "Jij kookt vandaag niet";
             }
             // Get YouCook
             int count = meals.Where(m => m.Cook.Id == student.Id).Count();
