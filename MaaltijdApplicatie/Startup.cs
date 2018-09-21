@@ -58,6 +58,8 @@ namespace MaaltijdApplicatie {
             // Use developer exception pages if the application is in development mode
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
+            } else {
+                app.UseExceptionHandler("/Error");
             }
 
             app.UseStatusCodePages();
