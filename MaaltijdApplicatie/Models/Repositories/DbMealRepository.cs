@@ -54,6 +54,7 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         }
 
+        // Saves changes made to meal objects
         public void Save() =>
             database.SaveChanges();
 
