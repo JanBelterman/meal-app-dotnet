@@ -49,32 +49,37 @@
 
     <!-- Content -->
     <div class="container-fluid">
-        <div class="row m-1">
-            @if (User.Identity.IsAuthenticated) {
-                <div class="col-md-3 mt-2 mb-2">
-                    @await Component.InvokeAsync("Widget")
-                </div>
-            }
-            <div class="col-md-9 mt-2">
 
-                @if (TempData["success"] != null) {
-                    <div class="alert alert-success aler-dismissible mb-2">
-                        @TempData["success"]
-                        <a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>
+        @if (TempData["success"] != null) {
+            <div class="alert alert-success aler-dismissible mb-2">
+                @TempData["success"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>
+            </div>
+        }
+
+        @if (TempData["error"] != null) {
+            <div class="alert alert-danger aler-dismissible mb-2">
+                @TempData["error"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>
+            </div>
+        }
+
+            <div class="row m-1">
+                @if (User.Identity.IsAuthenticated) {
+                    <div class="col-md-3 mt-2 mb-2">
+                        @await Component.InvokeAsync("Widget")
+                    </div>
+                    <div class="col-md-9 mt-2">
+                        @RenderBody()
+                    </div>
+                } else {
+                    <div class="col-md-9 mx-auto mt-2">
+                        @RenderBody()
                     </div>
                 }
 
-                @if (TempData["error"] != null) {
-                    <div class="alert alert-danger aler-dismissible mb-2">
-                        @TempData["error"]
-                        <a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>
-                    </div>
-                }
-
-                @RenderBody()
 
             </div>
-        </div>
     </div>
 
 </body>
