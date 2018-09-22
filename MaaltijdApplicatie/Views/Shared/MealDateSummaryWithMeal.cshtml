@@ -20,6 +20,9 @@
             <a asp-action="Edit" class="btn btn-secondary" asp-route-mealId="@Model.Meal.Id">
                 Bijwerken
             </a>
+            <a asp-action="Delete" class="btn btn-danger" asp-route-mealId="@Model.Meal.Id">
+                Verwijderen
+            </a>
 
         }
 
@@ -36,7 +39,7 @@
         } else {
 
             <a asp-action="Leave" class="btn btn-danger" asp-route-mealId="@Model.Meal.Id">
-                    Afzeggen <span class="badge badge-light">@(Model.Meal?.Guests?.Count() ?? 0) / @Model.Meal.MaxGuests</span>
+                Afzeggen <span class="badge badge-light">@(Model.Meal?.Guests?.Count() ?? 0) / @Model.Meal.MaxGuests</span>
             </a>
 
         }

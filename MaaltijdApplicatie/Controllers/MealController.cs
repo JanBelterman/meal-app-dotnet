@@ -133,6 +133,29 @@ namespace MaaltijdApplicatie.Controllers {
             return RedirectToAction("List");
 
         }
+
+        public IActionResult Delete(int mealId) {
+
+            // Get meal
+            Meal meal = mealRepository.GetMeal(mealId);
+            // Get student
+            Student student = studentRepository.GetStudent(GetUserId());
+
+            // Check if student is allowed to delete meal
+            DomainMethodResult result = meal.AllowedToEdit(student);
+
+            // Check for result
+            if (result.WasSuccessful) {
+                mealRepository.DeleteMeal(meal);
+                TempData["success"] = "Maaltijd succesvol verwijderd";
+            } else {
+                TempData["error"] = result.Message;
+            }
+
+            // Render main view
+            return RedirectToAction("List");
+
+        }
         
         // Adds a student to guests of a meal
         public IActionResult Join(int mealId) {

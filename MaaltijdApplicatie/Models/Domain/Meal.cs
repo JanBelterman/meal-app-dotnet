@@ -61,13 +61,17 @@ namespace MaaltijdApplicatie.Models.Domain {
             if (Cook.Id == student.Id) {
                 result.Message = "Je kan niet mee eten aan een maaltijd die je zelf kookt";
             }
+            // If student has already registered he/she cannot register a second time
+            else if (Guests.Any(g => g.StudentId == student.Id)) {
+                result.Message = "Je eet al mee aan deze maaltijd";
+            }
             // If meal has no free space left student cannot register
             else if (Guests.Count >= MaxGuests) {
                 result.Message = "Je kan niet meer mee eten, alle plekken zijn bezet";
             }
             // Student is allowed to join meal
             else {
-                Guests.Add(new Guest() { Meal = this, Student = student });
+                Guests.Add(new Guest() { Meal = this, MealId = Id, Student = student, StudentId = student.Id });
                 result.Succeeded();
                 result.Message = "Succesvol aangemeld";
             }

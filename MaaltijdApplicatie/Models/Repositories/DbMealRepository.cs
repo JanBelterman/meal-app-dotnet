@@ -54,6 +54,15 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         }
 
+        // Deltes a meal by id
+        public void DeleteMeal(Meal meal) {
+
+            database.Meals.Remove(meal);
+
+            database.SaveChanges();
+
+        }
+
         // Saves changes made to meal objects
         public void Save() =>
             database.SaveChanges();

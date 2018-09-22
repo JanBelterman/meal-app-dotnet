@@ -14,6 +14,8 @@ namespace MaaltijdApplicatie.Models.Repositories {
 
         void SaveMeal(Meal meal);
 
+        void DeleteMeal(Meal meal);
+
         void Save();
 
     }
