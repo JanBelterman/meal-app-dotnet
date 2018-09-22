@@ -8,7 +8,7 @@ namespace MaaltijdApplicatie.Tests {
     public class MealTests {
 
         [Fact]
-        public void Students_Can_Join_Meals_With_Space_Left() {
+        public void Students_Can_Join_Meals() {
 
             // Arrange
             Meal meal = new Meal() { MaxGuests = 3, Cook = new Student() { Id = 1, Name = "Test student" } };
